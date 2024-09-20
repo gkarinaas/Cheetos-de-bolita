@@ -1,15 +1,17 @@
-// RPGGame.java
 import javax.swing.*;
 
+/** Define clase rpg **/
 public class RPGGame {
-  private Player player;
-  private Enemy enemy;
+  private final Player player;
+  private final Enemy enemy;
+
 
   public RPGGame(Player player, Enemy enemy) {
     this.player = player;
     this.enemy = enemy;
   }
 
+  /** inicia juego **/
   public void startGame() {
     JOptionPane.showMessageDialog(null, "¡Comienza la batalla entre " + player.getName() + " y " + enemy.getName() + "!");
     while (player.isAlive() && enemy.isAlive()) {
@@ -26,6 +28,7 @@ public class RPGGame {
     }
   }
 
+  /** Asigna turno del jugador **/
   private void playerTurn() {
     int option = JOptionPane.showConfirmDialog(null, "¿Quieres atacar?", "Turno de " + player.getName(), JOptionPane.YES_NO_OPTION);
     if (option == JOptionPane.YES_OPTION) {
@@ -33,6 +36,7 @@ public class RPGGame {
     }
   }
 
+  /** Asigna turno del enemigo **/
   private void enemyTurn() {
     JOptionPane.showMessageDialog(null, enemy.getName() + " se prepara para atacar.");
     enemy.attack(player);
