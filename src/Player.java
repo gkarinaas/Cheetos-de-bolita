@@ -1,11 +1,11 @@
+// Player.java
 import java.util.HashMap;
 import java.util.Random;
 import javax.swing.*;
 
-/** DEclara clase jugador **/
 public class Player {
-    private final String name;
-    private final HashMap<Stats, Integer> stats;
+    private String name;
+    private HashMap<Stats, Integer> stats;
 
     public Player(String name) {
         this.name = name;
@@ -13,7 +13,6 @@ public class Player {
         initializeStats();
     }
 
-    /** Inicializa estadisticas **/
     private void initializeStats() {
         stats.put(Stats.MAX_HP, 20);
         stats.put(Stats.HP, 20);
@@ -26,14 +25,12 @@ public class Player {
         return name;
     }
 
-    /** Define ataque **/
     public void attack(Enemy enemy) {
         int damage = calculateDamage(enemy);
         enemy.takeDamage(damage);
         JOptionPane.showMessageDialog(null, name + " ataca a " + enemy.getName() + " e inflige " + damage + " de daño.");
     }
 
-    /** Calcula el daño causado **/
     private int calculateDamage(Enemy enemy) {
         int attackPower = stats.get(Stats.ATTACK);
         int defensePower = enemy.getStats().get(Stats.DEFENSE);
@@ -41,7 +38,6 @@ public class Player {
         return Math.max(attackPower - defensePower + rand.nextInt(5), 0);
     }
 
-    /** Mantener vivo **/
     public boolean isAlive() {
         return stats.get(Stats.HP) > 0;
     }
