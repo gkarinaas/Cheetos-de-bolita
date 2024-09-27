@@ -41,7 +41,7 @@ public class RPGGame {
   /** Método para generar un enemigo aleatorio **/
   public static Enemy getRandomEnemy() {
     Random rand = new Random();
-    int randomIndex = rand.nextInt(5); // Selecciona un número aleatorio entre 0 y 4
+    int randomIndex = rand.nextInt(5); /**Selecciona un numero aleatorio entre 0 y 4 **/
 
     switch (randomIndex) {
       case 0:
@@ -55,17 +55,17 @@ public class RPGGame {
       case 4:
         return new DarkMage("Mago Oscuro");
       default:
-        return new Orc("Orco Guerrero"); // Por si acaso, se devuelve un Orc por defecto
+        return new Orc("Orco Guerrero"); /** Por si se devuelve por defecto**/
     }
   }
 
   public static void main(String[] args) {
     Player player = new Player("Cowboy");
 
-    // Generar un enemigo aleatorio
+    /** Gernerar enemigo aleatorio **/
     Enemy randomEnemy = getRandomEnemy();
 
-    // Iniciar el juego con el enemigo aleatorio
+    /** Iniciar el juego con enemigo aleatorio **/
     RPGGame game = new RPGGame(player, randomEnemy);
     game.startGame();
   }

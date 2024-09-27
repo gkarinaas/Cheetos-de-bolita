@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-// DarkMage.java
+/** DarkMage **/
 public class DarkMage extends Enemy {
     public DarkMage(String name) {
         super(name);
@@ -15,6 +15,7 @@ public class DarkMage extends Enemy {
         stats.put(Stats.SPEED, 12);
     }
 
+    /**Calcula ataque**/
     @Override
     public void attack(Player player) {
         JOptionPane.showMessageDialog(null, name + " lanza un hechizo oscuro a " + player.getName());

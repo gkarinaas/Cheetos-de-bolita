@@ -1,6 +1,5 @@
 import javax.swing.*;
 
-// Dragon.java
 public class Dragon extends Enemy {
     public Dragon(String name) {
         super(name);
@@ -15,6 +14,7 @@ public class Dragon extends Enemy {
         stats.put(Stats.SPEED, 10);
     }
 
+    /** calcula ataque **/
     @Override
     public void attack(Player player) {
         JOptionPane.showMessageDialog(null, name + " lanza una bola de fuego a " + player.getName());
