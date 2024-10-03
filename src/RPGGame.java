@@ -1,15 +1,16 @@
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.util.Random;
 
 public class RPGGame {
   private Player player;
-  private Enemy enemy;
+  private IEnemy enemy;
 
-  public RPGGame(Player player, Enemy enemy) {
+  public RPGGame(Player player, IEnemy enemy) {
     this.player = player;
     this.enemy = enemy;
   }
 
+  /** Iniciar juego **/
   public void startGame() {
     JOptionPane.showMessageDialog(null, "¡Comienza la batalla entre " + player.getName() + " y " + enemy.getName() + "!");
     while (player.isAlive() && enemy.isAlive()) {
@@ -25,48 +26,41 @@ public class RPGGame {
       JOptionPane.showMessageDialog(null, enemy.getName() + " ha derrotado a " + player.getName() + "!");
     }
   }
-
+  /** Turno de atacar del jugador **/
   private void playerTurn() {
     int option = JOptionPane.showConfirmDialog(null, "¿Quieres atacar?", "Turno de " + player.getName(), JOptionPane.YES_NO_OPTION);
     if (option == JOptionPane.YES_OPTION) {
       player.attack(enemy);
     }
   }
-
+ /** Turno de atacar del enemigo **/
   private void enemyTurn() {
     JOptionPane.showMessageDialog(null, enemy.getName() + " se prepara para atacar.");
     enemy.attack(player);
   }
 
-  /** Método para generar un enemigo aleatorio **/
-  public static Enemy getRandomEnemy() {
+  /** Método para seleccionar un enemigo aleatorio **/
+  private static IEnemy getRandomEnemy() {
     Random rand = new Random();
-    int randomIndex = rand.nextInt(5); /**Selecciona un numero aleatorio entre 0 y 4 **/
+    int enemyType = rand.nextInt(5); // Cinco tipos de enemigos disponibles
 
-    switch (randomIndex) {
-      case 0:
-        return new Orc("Orco Guerrero");
-      case 1:
-        return new Dragon("Dragón Rojo");
-      case 2:
-        return new Zombie("Zombi Lento");
-      case 3:
-        return new Skeleton("Esqueleto Arquero");
-      case 4:
-        return new DarkMage("Mago Oscuro");
-      default:
-        return new Orc("Orco Guerrero"); /** Por si se devuelve por defecto**/
+    switch (enemyType) {
+      case 0: return new Undead();
+      case 1: return new Beast();
+      case 2: return new Demon();
+      case 3: return new Robot();
+      case 4: return new Alien();
+      default: return new Undead(); // Por si acaso
     }
   }
 
   public static void main(String[] args) {
     Player player = new Player("Cowboy");
 
-    /** Gernerar enemigo aleatorio **/
-    Enemy randomEnemy = getRandomEnemy();
+    /** Selecciona el enemigo de manera aleatoria **/
+    IEnemy enemy = getRandomEnemy();
 
-    /** Iniciar el juego con enemigo aleatorio **/
-    RPGGame game = new RPGGame(player, randomEnemy);
+    RPGGame game = new RPGGame(player, enemy);
     game.startGame();
   }
 }

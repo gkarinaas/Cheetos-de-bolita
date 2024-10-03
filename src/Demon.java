@@ -1,7 +1,6 @@
-// Orc.java
-public class Orc extends Enemy {
-    public Orc(String name) {
-        super(name);
+public class Demon extends Enemy {
+    public Demon() {
+        super("Demonio");
     }
 
     @Override
@@ -10,6 +9,6 @@ public class Orc extends Enemy {
         stats.put(Stats.HP, 100);
         stats.put(Stats.ATTACK, 25);
         stats.put(Stats.DEFENSE, 15);
-        stats.put(Stats.SPEED, 7);
+        stats.put(Stats.SPEED, 6);
     }
 }

@@ -1,7 +1,6 @@
-// Player.java
 import java.util.HashMap;
 import java.util.Random;
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class Player {
     private String name;
@@ -24,22 +23,22 @@ public class Player {
     public String getName() {
         return name;
     }
-    /**Calcular ataque**/
-    public void attack(Enemy enemy) {
+
+    /** Calcular ataque **/
+    public void attack(IEnemy enemy) {
         int damage = calculateDamage(enemy);
         enemy.takeDamage(damage);
         JOptionPane.showMessageDialog(null, name + " ataca a " + enemy.getName() + " e inflige " + damage + " de daño.");
     }
 
-    /**Calcular daño **/
-    private int calculateDamage(Enemy enemy) {
+    /** Calcular daño **/
+    private int calculateDamage(IEnemy enemy) {
         int attackPower = stats.get(Stats.ATTACK);
         int defensePower = enemy.getStats().get(Stats.DEFENSE);
         Random rand = new Random();
         return Math.max(attackPower - defensePower + rand.nextInt(5), 0);
     }
 
-    /** Mantener vivo **/
     public boolean isAlive() {
         return stats.get(Stats.HP) > 0;
     }
