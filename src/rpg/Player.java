@@ -1,23 +1,26 @@
 package rpg;
 
-import rpg.enu.Stats;
+import rpg.entities.Inventory;
 import rpg.entities.enemies.Enemy;
-import java.util.HashMap;
-import java.util.Random;
-import javax.swing.JOptionPane;
+import rpg.entities.items.weapons.Sword;
+import rpg.entities.items.armors.Helmet;
+import rpg.enu.Stats;
 
-public class Player {
-    private String name;
-    private HashMap<Stats, Integer> stats;
+public class Player extends GameCharacter {
+    private Inventory inventory;
 
     public Player(String name) {
-        this.name = name;
-        this.stats = new HashMap<>();
+        super(name);
+        inventory = new Inventory(10); // Capacidad inicial de 10 ítems.
         initializeStats();
     }
 
-    /** inicializar estadisticas **/
-    private void initializeStats() {
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    @Override
+    protected void initializeStats() {
         stats.put(Stats.MAX_HP, 20);
         stats.put(Stats.HP, 20);
         stats.put(Stats.ATTACK, 20);
@@ -25,28 +28,12 @@ public class Player {
         stats.put(Stats.SPEED, 5);
     }
 
-    public String getName() {
-        return name;
-    }
- /** atacar */
-    public void attack(Enemy enemy) {
-        int damage = calculateDamage(enemy);
-        enemy.takeDamage(damage);
-        JOptionPane.showMessageDialog(null, name + " ataca a " + enemy.getName() + " e inflige " + damage + " de daño.");
-    }
- /** calcular daño **/
-    private int calculateDamage(Enemy enemy) {
-        int attackPower = stats.get(Stats.ATTACK);
-        int defensePower = enemy.getStats().get(Stats.DEFENSE);
-        Random rand = new Random();
-        return Math.max(attackPower - defensePower + rand.nextInt(5), 0);
-    }
-/** mantener vivo **/
-    public boolean isAlive() {
-        return stats.get(Stats.HP) > 0;
+    public void equipInitialItems() {
+        inventory.addItem(new Sword());
+        inventory.addItem(new Helmet());
     }
 
-    public HashMap<Stats, Integer> getStats() {
-        return stats;
+    public void attack(Enemy enemy) {
     }
 }
+
