@@ -2,8 +2,10 @@ package rpg;
 
 import rpg.entities.Inventory;
 import rpg.entities.enemies.Enemy;
+import rpg.entities.items.armors.Armor;
 import rpg.entities.items.weapons.Sword;
 import rpg.entities.items.armors.Helmet;
+import rpg.entities.items.weapons.Weapon;
 import rpg.enu.Stats;
 
 public class Player extends GameCharacter {
@@ -35,5 +37,10 @@ public class Player extends GameCharacter {
 
     public void attack(Enemy enemy) {
     }
-}
 
+    public void equipArmor(Armor item) {
+    }
+
+    public void equipWeapon(Weapon item) {
+    }
+}
