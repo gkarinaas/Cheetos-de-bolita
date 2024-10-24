@@ -4,27 +4,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
-/** Clase principal para la ventana del juego **/
 public class jframe extends JFrame {
 
     /** Constantes de tamaño de ventana y altura de los paneles **/
     private static final int WINDOW_WIDTH = 800;
-    private static final int WINDOW_HEIGHT = 600; /**Suma de las alturas de los paneles **/
-    private static final int BARRA_ESTADO_HEIGHT = 40;
+    private static final int WINDOW_HEIGHT = 600;
+    private static final int BARRA_ESTADO_HEIGHT = 50;
     private static final int PANEL_JUEGO_HEIGHT = 370;
-    private static final int BARRA_ACCION_HEIGHT = 40;
+    private static final int BARRA_ACCION_HEIGHT = 50;
 
     /** Caché para almacenar imágenes **/
     private HashMap<String, ImageIcon> imageCache = new HashMap<>();
 
     public jframe() {
-        /**Configuración de la ventana**/
-        setTitle("monito");
+        /** Configuración de la ventana **/
+        setTitle("Juego con imágenes");
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        /**Crear y agregar los paneles con tamaños específicos**/
+        /** Crear y agregar los paneles **/
         JPanel barraEstado = crearBarraEstado();
         JPanel panelJuego = crearPanelJuego();
         JPanel barraAccion = crearBarraAccion();
@@ -34,32 +33,35 @@ public class jframe extends JFrame {
         add(panelJuego, BorderLayout.CENTER);
         add(barraAccion, BorderLayout.SOUTH);
 
-        /**Mostrar la ventana**/
+        /** Mostrar la ventana **/
         setVisible(true);
     }
 
-    /**Método para crear la barra de estado (sección superior)**/
+    /** Método para crear la barra de estado (sección superior) **/
     private JPanel crearBarraEstado() {
         JPanel barraEstado = new JPanel();
-        barraEstado.setBackground(new Color(26, 169, 21)); /** color verde**/
+        barraEstado.setBackground(new Color(216, 191, 163)); /** Color verde **/
         barraEstado.setPreferredSize(new Dimension(WINDOW_WIDTH, BARRA_ESTADO_HEIGHT));
 
-        /**Etiquetas de estado del juego**/
+        /** Cargar y agregar imagen a la barra de estado **/
+        JLabel imagenEstado = new JLabel(cargarImagenDesdeClasspath("/coraz.png", 30, 30)); // Ajustar tamaño aquí
+        barraEstado.add(imagenEstado);
+
+        /** Etiquetas de estado del juego **/
         JLabel saludJugador = new JLabel("Salud: 100");
         barraEstado.add(saludJugador);
 
         return barraEstado;
     }
 
-    /**Método para crear el panel de juego (sección central)**/
+    /** Método para crear el panel de juego (sección central) **/
     private JPanel crearPanelJuego() {
         JPanel panelJuego = new JPanel();
-        panelJuego.setBackground(new Color(142, 151, 141)); /** color gris **/
-        panelJuego.setPreferredSize(new Dimension(WINDOW_WIDTH, PANEL_JUEGO_HEIGHT));
+        panelJuego.setBackground(new Color(234, 239, 234)); /** Color gris **/        panelJuego.setPreferredSize(new Dimension(WINDOW_WIDTH, PANEL_JUEGO_HEIGHT));
 
-        /** cargar una imagen en el panel de juego **/
-        JLabel jugador = new JLabel(cargarImagen("monito.png"));
-        panelJuego.add(jugador);
+        /** Cargar y agregar imagen al panel de juego **/
+        JLabel imagenJuego = new JLabel(cargarImagenDesdeClasspath("/walleotravez.png", 400, 500)); // Ajustar tamaño aquí
+        panelJuego.add(imagenJuego);
 
         return panelJuego;
     }
@@ -67,10 +69,14 @@ public class jframe extends JFrame {
     /** Método para crear la barra de acción (sección inferior) **/
     private JPanel crearBarraAccion() {
         JPanel barraAccion = new JPanel();
-        barraAccion.setBackground(new Color(67, 35, 61)); /** morado **/
+        barraAccion.setBackground(new Color(156, 135, 110)); /** Color morado **/
         barraAccion.setPreferredSize(new Dimension(WINDOW_WIDTH, BARRA_ACCION_HEIGHT));
 
-        /** botones de acción **/
+        /** Cargar y agregar imagen a la barra de acción **/
+        JLabel imagenAccion = new JLabel(cargarImagenDesdeClasspath("/muñequito.png", 30, 40)); // Ajustar tamaño aquí
+        barraAccion.add(imagenAccion);
+
+        /** Botones de acción **/
         JButton botonAtacar = new JButton("Atacar");
         JButton botonDefender = new JButton("Defender");
         JButton botonUsarObjeto = new JButton("Usar Objeto");
@@ -82,16 +88,26 @@ public class jframe extends JFrame {
         return barraAccion;
     }
 
-    /**Método para cargar imágenes utilizando una caché**/
-    private ImageIcon cargarImagen(String ruta) {
+    /** Método para cargar imágenes desde el classpath y redimensionarlas **/
+    private ImageIcon cargarImagenDesdeClasspath(String ruta, int ancho, int alto) {
         if (imageCache.containsKey(ruta)) {
             return imageCache.get(ruta); /** Recuperar imagen de la caché **/
         } else {
-            ImageIcon imagen = new ImageIcon(ruta); /** Cargar imagen desde disco **/
-            imageCache.put(ruta, imagen); /** Almacenar en la caché **/
-            return imagen;
+            java.net.URL imgURL = getClass().getResource(ruta); /** Buscar la imagen en el classpath **/
+            if (imgURL != null) {
+                ImageIcon imagen = new ImageIcon(imgURL);
+                // Redimensionar la imagen
+                Image imagenEscalada = imagen.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+                ImageIcon imagenFinal = new ImageIcon(imagenEscalada);
+                imageCache.put(ruta, imagenFinal);
+                return imagenFinal;
+            } else {
+                System.err.println("No se encontró la imagen: " + ruta);
+                return null; // O puedes retornar una imagen por defecto aquí
+            }
         }
     }
+
 
     public static void main(String[] args) {
         /** Iniciar la ventana del juego **/
