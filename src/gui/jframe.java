@@ -40,11 +40,11 @@ public class jframe extends JFrame {
     /** Método para crear la barra de estado (sección superior) **/
     private JPanel crearBarraEstado() {
         JPanel barraEstado = new JPanel();
-        barraEstado.setBackground(new Color(216, 191, 163)); /** Color verde **/
+        barraEstado.setBackground(new Color(216, 191, 163)); /** Color cafe **/
         barraEstado.setPreferredSize(new Dimension(WINDOW_WIDTH, BARRA_ESTADO_HEIGHT));
 
         /** Cargar y agregar imagen a la barra de estado **/
-        JLabel imagenEstado = new JLabel(cargarImagenDesdeClasspath("/coraz.png", 30, 30)); // Ajustar tamaño aquí
+        JLabel imagenEstado = new JLabel(cargarImagenDesdeClasspath("/coraz.png", 30, 30));
         barraEstado.add(imagenEstado);
 
         /** Etiquetas de estado del juego **/
@@ -57,10 +57,11 @@ public class jframe extends JFrame {
     /** Método para crear el panel de juego (sección central) **/
     private JPanel crearPanelJuego() {
         JPanel panelJuego = new JPanel();
-        panelJuego.setBackground(new Color(234, 239, 234)); /** Color gris **/        panelJuego.setPreferredSize(new Dimension(WINDOW_WIDTH, PANEL_JUEGO_HEIGHT));
+        panelJuego.setBackground(new Color(234, 239, 234)); /** Color gris **/
+        panelJuego.setPreferredSize(new Dimension(WINDOW_WIDTH, PANEL_JUEGO_HEIGHT));
 
         /** Cargar y agregar imagen al panel de juego **/
-        JLabel imagenJuego = new JLabel(cargarImagenDesdeClasspath("/walleotravez.png", 400, 500)); // Ajustar tamaño aquí
+        JLabel imagenJuego = new JLabel(cargarImagenDesdeClasspath("/walleotravez.png", 400, 500));
         panelJuego.add(imagenJuego);
 
         return panelJuego;
@@ -69,11 +70,11 @@ public class jframe extends JFrame {
     /** Método para crear la barra de acción (sección inferior) **/
     private JPanel crearBarraAccion() {
         JPanel barraAccion = new JPanel();
-        barraAccion.setBackground(new Color(156, 135, 110)); /** Color morado **/
+        barraAccion.setBackground(new Color(156, 135, 110)); /** Color cafe **/
         barraAccion.setPreferredSize(new Dimension(WINDOW_WIDTH, BARRA_ACCION_HEIGHT));
 
         /** Cargar y agregar imagen a la barra de acción **/
-        JLabel imagenAccion = new JLabel(cargarImagenDesdeClasspath("/muñequito.png", 30, 40)); // Ajustar tamaño aquí
+        JLabel imagenAccion = new JLabel(cargarImagenDesdeClasspath("/muñequito.png", 30, 40)); /**Ajustar tamaño aquí de la imagen **/
         barraAccion.add(imagenAccion);
 
         /** Botones de acción **/
@@ -103,7 +104,7 @@ public class jframe extends JFrame {
                 return imagenFinal;
             } else {
                 System.err.println("No se encontró la imagen: " + ruta);
-                return null; // O puedes retornar una imagen por defecto aquí
+                return null;
             }
         }
     }
