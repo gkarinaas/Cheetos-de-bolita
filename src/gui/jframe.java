@@ -1,5 +1,7 @@
 package gui;
 
+import gui.Buttons.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -74,17 +76,21 @@ public class jframe extends JFrame {
         barraAccion.setPreferredSize(new Dimension(WINDOW_WIDTH, BARRA_ACCION_HEIGHT));
 
         /** Cargar y agregar imagen a la barra de acción **/
-        JLabel imagenAccion = new JLabel(cargarImagenDesdeClasspath("/muñequito.png", 30, 40)); /**Ajustar tamaño aquí de la imagen **/
+        JLabel imagenAccion = new JLabel(cargarImagenDesdeClasspath("/muñequito.png", 30, 40)); /** Ajustar tamaño aquí de la imagen **/
         barraAccion.add(imagenAccion);
 
-        /** Botones de acción **/
-        JButton botonAtacar = new JButton("Atacar");
-        JButton botonDefender = new JButton("Defender");
-        JButton botonUsarObjeto = new JButton("Usar Objeto");
+        /** Botones de acción personalizados **/
+        AttackButton botonAtacar = new AttackButton();
+        SaveButton botonGuardar = new SaveButton();
+        ExitButton botonSalir = new ExitButton();
+        InventoryButton botonInventario = new InventoryButton();
+        StatsButton botonEstadisticas = new StatsButton();
 
         barraAccion.add(botonAtacar);
-        barraAccion.add(botonDefender);
-        barraAccion.add(botonUsarObjeto);
+        barraAccion.add(botonGuardar);
+        barraAccion.add(botonSalir);
+        barraAccion.add(botonInventario);
+        barraAccion.add(botonEstadisticas);
 
         return barraAccion;
     }
