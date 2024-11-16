@@ -1,48 +1,55 @@
 package rpg.enu;
 
-import rpg.utils.cache.ImageCache;
-
+import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.net.URL;
 
-public enum BarType {
+public class BarType {
 
-    LIFE, MAGIC, EXPERIENCE;
+    // Definición de las barras de estado con imágenes predeterminadas
+    public static final BarType LIFE = new BarType("/coraz.png");
+    public static final BarType MAGIC = new BarType("/walleotravez.png");
+    public static final BarType EXPERIENCE = new BarType("/muñequito.png");
 
-    BufferedImage container;
-    BufferedImage icon;
-    BufferedImage bar;
+    private ImageIcon icon;
 
-    BarType() {
-        switch (this) {
-            case LIFE -> {
-                container = ImageCache.addImage("life_container", "bars/life_container.png");
-                icon = ImageCache.addImage("life_icon", "bars/life_icon.png");
-                bar = ImageCache.addImage("life_bar", "bars/life_bar.png");
+    // Constructor que carga la imagen desde el classpath
+    public BarType(String imagePath) {
+        try {
+            // Intentar cargar la imagen desde el classpath
+            URL url = getClass().getResource(imagePath);
+
+            if (url == null) {
+                // Si la URL es nula, significa que la imagen no fue encontrada
+                throw new IllegalArgumentException("No se pudo encontrar la imagen: " + imagePath);
             }
-            case MAGIC -> {
-                // Cargar imágenes para la barra de magia
-                container = ImageCache.addImage("magic_container", "bars/magic_container.png");
-                icon = ImageCache.addImage("magic_icon", "bars/magic_icon.png");
-                bar = ImageCache.addImage("magic_bar", "bars/magic_bar.png");
+
+            // Crear el icono a partir de la URL
+            icon = new ImageIcon(url);
+
+            // Verificar si la imagen se cargó correctamente
+            if (icon.getIconWidth() == -1) {
+                // Si la imagen tiene un tamaño de -1, significa que la imagen no pudo ser cargada correctamente
+                throw new IllegalArgumentException("La imagen no tiene un tamaño válido: " + imagePath);
             }
-            case EXPERIENCE -> {
-                // Cargar imágenes para la barra de experiencia
-                container = ImageCache.addImage("experience_container", "bars/experience_container.png");
-                icon = ImageCache.addImage("experience_icon", "bars/experience_icon.png");
-                bar = ImageCache.addImage("experience_bar", "bars/experience_bar.png");
-            }
+
+        } catch (Exception e) {
+            // Imprimir el error y mostrar un mensaje si hay problemas cargando la imagen
+            System.err.println("Error al cargar la imagen: " + imagePath);
+            e.printStackTrace();
         }
     }
 
-    public BufferedImage getContainer() {
-        return container;
-    }
-
-    public BufferedImage getIcon() {
+    // Método para obtener el icono de la barra
+    public ImageIcon getIcon() {
         return icon;
     }
 
+    public BufferedImage getContainer() {
+        return null;
+    }
+
     public BufferedImage getBar() {
-        return bar;
+        return null;
     }
 }

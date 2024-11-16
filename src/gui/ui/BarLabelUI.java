@@ -37,12 +37,12 @@ public class BarLabelUI extends BasicLabelUI {
     public void paint(Graphics g, JComponent c) {
         Graphics2D g2d = (Graphics2D) g;
         BarLabel barLabel = (BarLabel) c;
-        BufferedImage icon = type.getIcon();
+        ImageIcon icon = type.getIcon();
         BufferedImage container = type.getContainer();
         BufferedImage bar = type.getBar();
 
         int barWidth = (int) ((double) barLabel.getBarValue() / barLabel.getMaxValue() * 150);  // Ajuste de ancho de la barra
-        g2d.drawImage(icon, 0, 0, 20, 20, null);  // Icono
+        g2d.drawImage(icon.getImage(), 0, 0, 20, 20, null);  // Icono
         g2d.drawImage(container, 25, 0, 150, 20, null);  // Contenedor
         g2d.setColor(new Color(143, 94, 18));  // Color de la barra
         g2d.fillRect(25, 0, barWidth, 20);  // Barra de estado

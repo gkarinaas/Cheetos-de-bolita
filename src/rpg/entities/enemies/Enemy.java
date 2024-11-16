@@ -17,6 +17,10 @@ public class Enemy {
         initializeStats();
     }
 
+    public Enemy() {
+
+    }
+
     private void initializeStats() {
         stats.put(Stats.MAX_HP, 80);
         stats.put(Stats.HP, 80);
@@ -52,5 +56,9 @@ public class Enemy {
 
     public HashMap<Stats, Integer> getStats() {
         return stats;
+    }
+
+    public ImageIcon getSprite() {
+        return null;
     }
 }
