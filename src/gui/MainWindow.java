@@ -2,12 +2,16 @@ package gui;
 
 import gui.Labels.BarLabel;
 import rpg.enu.BarType;
+import rpg.enu.Stats;
 import gui.Labels.NameLabel;
 import gui.Labels.GoldLabel;
+import rpg.Player;
+import rpg.entities.enemies.RookieGoblin;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame {
 
@@ -17,12 +21,13 @@ public class MainWindow extends JFrame {
     private JLabel lifeLabelText, magicLabelText, expLabelText;
     private NameLabel nameLabel;
     private GoldLabel goldLabel;
-
-    // Nuevos componentes para el área de mensajes y botones de acción
     private JTextArea textDisplay;
     private JScrollPane textScroll;
-    private JPanel actionButtonsPanel;
-    private JPanel messageAreaPanel;
+    private JPanel actionButtonsPanel, messageAreaPanel;
+
+    // Jugador y enemigo
+    private Player player;
+    private RookieGoblin enemy;
 
     public MainWindow() {
         setTitle("RPG Game");
@@ -30,27 +35,26 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        // Inicializar jugador y enemigo
+        player = new Player("Cowboy", 100, 20, 10); // Ajustar según constructor de Player
+        enemy = new RookieGoblin("Goblin Novato", 50, 15); // Ajustar según constructor de RookieGoblin
+
         createUIComponents();
         addComponentsToFrame();
     }
 
     private void createUIComponents() {
-        // Instancia los paneles
         topPanel = new JPanel();
         middlePanel = new JPanel();
         bottomPanel = new JPanel();
         juegoPanel = crearPanelJuego();
-
-        // Instancia de los paneles para el área de mensajes y botones de acción
         actionButtonsPanel = new JPanel();
         messageAreaPanel = new JPanel();
 
-        // Establece los layouts de los paneles
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         middlePanel.setLayout(new FlowLayout());
-        bottomPanel.setLayout(new BorderLayout()); // Modificamos el layout del panel inferior
+        bottomPanel.setLayout(new BorderLayout());
 
-        // Crear los botones
         button1 = new JButton("Botón 1");
         b2 = new JButton("Tiendas");
         b3 = new JButton("Inventario");
@@ -58,33 +62,32 @@ public class MainWindow extends JFrame {
         habilidadesButton = new JButton("Habilidades");
         huirButton = new JButton("Salir");
 
-        // Crear las barras de estado
         lifeLabel = new BarLabel(100, 100, BarType.LIFE);
         magicLabel = new BarLabel(30, 100, BarType.MAGIC);
         expLabel = new BarLabel(50, 100, BarType.EXPERIENCE);
 
-        // Crear las etiquetas de texto
         lifeLabelText = new JLabel("Vida:");
         magicLabelText = new JLabel("Magia:");
         expLabelText = new JLabel("Experiencia:");
 
-        // Establecer el color de texto para las etiquetas
         lifeLabelText.setForeground(new Color(67, 13, 54));
         magicLabelText.setForeground(new Color(67, 13, 54));
         expLabelText.setForeground(new Color(67, 13, 54));
 
-        // Crear etiquetas personalizadas para nombre y oro
-        nameLabel = new NameLabel("Cowboy");
+        nameLabel = new NameLabel(player.getName());
         goldLabel = new GoldLabel("1000");
 
-        // Crear el área de mensajes
         textDisplay = new JTextArea();
         textScroll = new JScrollPane(textDisplay);
-        initComponents(); // Llamar para inicializar el área de texto
+        initComponents();
+
+        // Asignar acciones a botones
+        atacarButton.addActionListener(this::handleAttackAction);
+        habilidadesButton.addActionListener(e -> appendText("Habilidades aún no implementadas."));
+        huirButton.addActionListener(e -> appendText("¡Huiste del combate!"));
     }
 
     private void initComponents() {
-        // Inicializar el área de texto
         textScroll.getViewport().setOpaque(false);
         textScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -93,87 +96,68 @@ public class MainWindow extends JFrame {
         textDisplay.setForeground(Color.WHITE);
         textDisplay.setLineWrap(true);
         textDisplay.setWrapStyleWord(true);
-        textDisplay.setEditable(false);  // No permitir la edición por parte del usuario
+        textDisplay.setEditable(false);
     }
 
     private void addComponentsToFrame() {
-        // Agrega las barras de estado y las etiquetas al panel superior (topPanel)
-        JPanel lifePanel = new JPanel();
-        lifePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JPanel lifePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         lifePanel.add(lifeLabelText);
         lifePanel.add(lifeLabel);
 
-        JPanel magicPanel = new JPanel();
-        magicPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JPanel magicPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         magicPanel.add(magicLabelText);
         magicPanel.add(magicLabel);
 
-        JPanel expPanel = new JPanel();
-        expPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JPanel expPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         expPanel.add(expLabelText);
         expPanel.add(expLabel);
 
-        // Agregar las barras de estado a topPanel
         topPanel.add(lifePanel);
         topPanel.add(magicPanel);
         topPanel.add(expPanel);
 
-        // Agrega los botones al panel del medio
         middlePanel.add(button1);
         middlePanel.add(b2);
         middlePanel.add(b3);
         middlePanel.add(atacarButton);
         middlePanel.add(habilidadesButton);
         middlePanel.add(huirButton);
+        middlePanel.add(nameLabel);
+        middlePanel.add(goldLabel);
 
-        // Agrega las etiquetas de nombre y oro a middlePanel o donde las desees
-        middlePanel.add(nameLabel);  // Agrega la etiqueta del nombre
-        middlePanel.add(goldLabel);  // Agrega la etiqueta del oro
-
-        // Crear un contenedor en el centro para agregar tanto el panel de botones como el panel de juego
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BorderLayout());
+        JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.add(middlePanel, BorderLayout.NORTH);
         centerPanel.add(juegoPanel, BorderLayout.CENTER);
 
-        // Configurar los paneles para el área de mensajes y los botones de acción
-        actionButtonsPanel.setLayout(new GridLayout(1, 3));  // Crear una fila de botones
+        actionButtonsPanel.setLayout(new GridLayout(1, 3));
         actionButtonsPanel.add(atacarButton);
         actionButtonsPanel.add(habilidadesButton);
         actionButtonsPanel.add(huirButton);
 
-        // Añadir los botones y el área de mensajes en el panel inferior
         messageAreaPanel.setLayout(new BorderLayout());
         messageAreaPanel.add(actionButtonsPanel, BorderLayout.WEST);
         messageAreaPanel.add(textScroll, BorderLayout.CENTER);
 
-        // Añade los paneles a la ventana principal
         add(topPanel, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
-        add(messageAreaPanel, BorderLayout.SOUTH);  // Agregar el panel de mensajes al sur
+        add(messageAreaPanel, BorderLayout.SOUTH);
     }
 
     private JPanel crearPanelJuego() {
-        JPanel panelJuego = new JPanel();
+        JPanel panelJuego = new JPanel(new BorderLayout());
         panelJuego.setBackground(new Color(255, 233, 245));
         panelJuego.setPreferredSize(new Dimension(400, 500));
-        panelJuego.setLayout(new BorderLayout());
 
-        // Crear un panel que contendrá las imágenes
-        JPanel imagesPanel = new JPanel();
-        imagesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 0)); // Mayor espaciado horizontal
+        JPanel imagesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 300, 0));
         imagesPanel.setOpaque(false);
 
-        // Agregar las dos imágenes al panel de imágenes
         JLabel imagenJuego = new JLabel(cargarImagenDesdeClasspath("/personaje.png", 80, 80));
         JLabel segundaImagen = new JLabel(cargarImagenDesdeClasspath("/RookieGoblin.png", 80, 80));
 
         imagesPanel.add(imagenJuego);
         imagesPanel.add(segundaImagen);
 
-        // Agregar las imágenes en la parte inferior del panel
         panelJuego.add(imagesPanel, BorderLayout.SOUTH);
-
         return panelJuego;
     }
 
@@ -184,17 +168,28 @@ public class MainWindow extends JFrame {
         return new ImageIcon(scaledImg);
     }
 
-    // Función para mostrar los mensajes en el JTextArea
+    private void handleAttackAction(ActionEvent e) {
+        String playerAttack = player.attack(enemy);
+        String enemyAttack = enemy.attack(player);
+
+        appendText(playerAttack);
+        appendText(enemyAttack);
+
+        // Actualizar barras de vida
+        lifeLabel.setValue(player.getStats().get(Stats.HP));
+        if (enemy.getStats().get(Stats.HP) <= 0) {
+            appendText("¡Has derrotado al enemigo!");
+        } else if (player.getStats().get(Stats.HP) <= 0) {
+            appendText("¡Has sido derrotado!");
+        }
+    }
+
     public void appendText(String text) {
-        // Añadimos el texto al textDisplay
         textDisplay.append(text + "\n");
-        // Hacemos que el textDisplay se posicione en la última línea
         textDisplay.setCaretPosition(textDisplay.getDocument().getLength());
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new MainWindow().setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new MainWindow().setVisible(true));
     }
 }

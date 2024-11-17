@@ -35,4 +35,7 @@ public class BarLabel extends JLabel {
     public int getMaxValue() {
         return maxValue;
     }
+
+    public void setValue(Integer integer) {
+    }
 }

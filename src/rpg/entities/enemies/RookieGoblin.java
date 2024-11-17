@@ -10,9 +10,9 @@ import javax.swing.*;
 
 public class RookieGoblin extends Enemy {
 
-    public RookieGoblin() {
+    public RookieGoblin(String goblinNovato, int i, int i1) {
         super();
-        ImageCache.addImage("rookie_goblin", "enemies/goblins/rookie_goblin.png");
+        ImageCache.addImage("rookie_goblin", "RookieGoblin.png");
     }
 
     @Override

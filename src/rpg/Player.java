@@ -14,7 +14,7 @@ import java.io.*;
 public class Player extends GameCharacter implements Serializable {
     private final Inventory inventory;
 
-    public Player(String name) {
+    public Player(String name, int i, int i1, int i2) {
         super();
         inventory = new Inventory();
     }
