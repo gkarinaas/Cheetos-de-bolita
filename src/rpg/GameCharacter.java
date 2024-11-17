@@ -7,7 +7,7 @@ public abstract class GameCharacter {
     protected String name;
     protected HashMap<Stats, Integer> stats;
 
-    public GameCharacter(String name) {
+    public GameCharacter() {
         this.name = name;
         this.stats = new HashMap<>();
         initializeStats();

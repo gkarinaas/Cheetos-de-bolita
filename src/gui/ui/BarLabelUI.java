@@ -44,7 +44,7 @@ public class BarLabelUI extends BasicLabelUI {
         int barWidth = (int) ((double) barLabel.getBarValue() / barLabel.getMaxValue() * 150);  // Ajuste de ancho de la barra
         g2d.drawImage(icon.getImage(), 0, 0, 20, 20, null);  // Icono
         g2d.drawImage(container, 25, 0, 150, 20, null);  // Contenedor
-        g2d.setColor(new Color(143, 94, 18));  // Color de la barra
+        g2d.setColor(new Color(170, 73, 138));  // Color de la barra
         g2d.fillRect(25, 0, barWidth, 20);  // Barra de estado
     }
 }

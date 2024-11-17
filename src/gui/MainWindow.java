@@ -64,7 +64,7 @@ public class MainWindow extends JFrame {
         expLabelText = new JLabel("Experiencia:");
 
         // Establecer el color de texto para las etiquetas
-        lifeLabelText.setForeground(new Color(117, 80, 21));
+        lifeLabelText.setForeground(new Color(67, 13, 54));
         magicLabelText.setForeground(new Color(67, 13, 54));
         expLabelText.setForeground(new Color(67, 13, 54));
 
@@ -121,14 +121,30 @@ public class MainWindow extends JFrame {
 
     private JPanel crearPanelJuego() {
         JPanel panelJuego = new JPanel();
-        panelJuego.setBackground(new Color(216, 191, 163));
+        panelJuego.setBackground(new Color(255, 233, 245));
         panelJuego.setPreferredSize(new Dimension(400, 500));
+        panelJuego.setLayout(new BorderLayout()); // Usar BorderLayout para colocar elementos en posiciones específicas
 
-        JLabel imagenJuego = new JLabel(cargarImagenDesdeClasspath("/walleotravez.png", 300, 400));
-        panelJuego.add(imagenJuego);
+        // Crear un panel que contendrá las imágenes
+        JPanel imagesPanel = new JPanel();
+        imagesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 0)); // Mayor espaciado horizontal (50px)
+        imagesPanel.setOpaque(false); // Para que no tenga fondo blanco
+
+        // Agregar las dos imágenes al panel de imágenes
+        JLabel imagenJuego = new JLabel(cargarImagenDesdeClasspath("/personaje.png", 80, 80));
+        JLabel segundaImagen = new JLabel(cargarImagenDesdeClasspath("/RookieGoblin.png", 80, 80));
+
+        imagesPanel.add(imagenJuego);
+        imagesPanel.add(segundaImagen);
+
+        // Agregar las imágenes en la parte inferior del panel
+        panelJuego.add(imagesPanel, BorderLayout.SOUTH); // Esto coloca las imágenes en la parte inferior
 
         return panelJuego;
     }
+
+
+
 
     private ImageIcon cargarImagenDesdeClasspath(String path, int width, int height) {
         ImageIcon icon = new ImageIcon(getClass().getResource(path));

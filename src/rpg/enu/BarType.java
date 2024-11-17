@@ -7,9 +7,9 @@ import java.net.URL;
 public class BarType {
 
     // Definición de las barras de estado con imágenes predeterminadas
-    public static final BarType LIFE = new BarType("/coraz.png");
-    public static final BarType MAGIC = new BarType("/walleotravez.png");
-    public static final BarType EXPERIENCE = new BarType("/muñequito.png");
+    public static final BarType LIFE = new BarType("/corazon.png");
+    public static final BarType MAGIC = new BarType("/estrella.png");
+    public static final BarType EXPERIENCE = new BarType("/medalla.png");
 
     private ImageIcon icon;
 

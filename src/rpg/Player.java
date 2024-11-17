@@ -12,7 +12,7 @@ public class Player extends GameCharacter {
     private Inventory inventory;
 
     public Player(String name) {
-        super(name);
+        super();
         inventory = new Inventory(10); // Capacidad inicial de 10 ítems.
         initializeStats();
     }

@@ -1,11 +1,13 @@
 package rpg.utils;
 
+import rpg.GameCharacter;
 import rpg.entities.enemies.Enemy;
 import rpg.entities.enemies.enemyTypeC.EnemyC;
 import rpg.entities.enemies.enemyTypeB.EnemyB;
 import rpg.entities.enemies.enemyTypeD.EnemyD;
 import rpg.entities.enemies.enemyTypeE.EnemyE;
 
+import javax.swing.*;
 import java.util.Random;
 
 public class Randomize {
@@ -16,11 +18,111 @@ public class Randomize {
 
         return switch (enemyType) {
             case 0 -> new WoodBear();
-            case 1 -> new EnemyB();
-            case 2 -> new EnemyC();
-            case 3 -> new EnemyD();
-            case 4 -> new EnemyE();
-            default -> new EnemyC(); // Por defecto si algo falla
+            case 1 -> new EnemyB() {
+                @Override
+                protected void initializeStats() {
+
+                }
+
+                @Override
+                public ImageIcon getSprite() {
+                    return null;
+                }
+
+                @Override
+                public void getLoot() {
+
+                }
+
+                @Override
+                public void attack(GameCharacter enemy) {
+
+                }
+            };
+            case 2 -> new EnemyC() {
+                @Override
+                protected void initializeStats() {
+
+                }
+
+                @Override
+                public ImageIcon getSprite() {
+                    return null;
+                }
+
+                @Override
+                public void getLoot() {
+
+                }
+
+                @Override
+                public void attack(GameCharacter enemy) {
+
+                }
+            };
+            case 3 -> new EnemyD() {
+                @Override
+                protected void initializeStats() {
+
+                }
+
+                @Override
+                public ImageIcon getSprite() {
+                    return null;
+                }
+
+                @Override
+                public void getLoot() {
+
+                }
+
+                @Override
+                public void attack(GameCharacter enemy) {
+
+                }
+            };
+            case 4 -> new EnemyE() {
+                @Override
+                protected void initializeStats() {
+
+                }
+
+                @Override
+                public ImageIcon getSprite() {
+                    return null;
+                }
+
+                @Override
+                public void getLoot() {
+
+                }
+
+                @Override
+                public void attack(GameCharacter enemy) {
+
+                }
+            };
+            default -> new EnemyC() {
+                @Override
+                protected void initializeStats() {
+
+                }
+
+                @Override
+                public ImageIcon getSprite() {
+                    return null;
+                }
+
+                @Override
+                public void getLoot() {
+
+                }
+
+                @Override
+                public void attack(GameCharacter enemy) {
+
+                }
+            }; // Por defecto si algo falla
         };
     }
 }
