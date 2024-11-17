@@ -20,12 +20,16 @@ public class WoodBear extends Enemy {
 
     }
 
-    @Override
-    public void attack(GameCharacter enemy) {
+    protected void initCharacter() {
 
     }
 
     @Override
+    public String attack(GameCharacter enemy) {
+
+        return null;
+    }
+
     protected void initializeStats() {
 
     }

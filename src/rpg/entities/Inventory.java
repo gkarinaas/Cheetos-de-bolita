@@ -11,7 +11,7 @@ public class Inventory {
     private ArrayList<Item> items;
     private int capacity;
 
-    public Inventory(int capacity) {
+    public Inventory() {
         this.capacity = capacity;
         this.items = new ArrayList<>();
     }
@@ -134,6 +134,10 @@ public class Inventory {
     }
 
     public Item getItemByName(String itemName) {
+        return null;
+    }
+
+    public Item[] getMiscs() {
         return null;
     }
 }

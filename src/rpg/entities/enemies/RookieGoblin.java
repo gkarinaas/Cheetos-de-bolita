@@ -3,6 +3,7 @@ package rpg.entities.enemies;
 import rpg.GameCharacter;
 import rpg.enu.EnemyType;
 import rpg.enu.Stats;
+import rpg.exceptions.EnemyDeathException;
 import rpg.utils.cache.ImageCache;
 
 import javax.swing.*;
@@ -10,47 +11,49 @@ import javax.swing.*;
 public class RookieGoblin extends Enemy {
 
     public RookieGoblin() {
-        super("Rookie Goblin"); // Nombre del enemigo
-        initCharacter();       // Inicializar atributos del enemigo
-    }
-
-    protected void initCharacter() {
-        this.type = EnemyType.BASIC; // Tipo del enemigo
-        // Establecer estadísticas del enemigo
-        this.stats.put(Stats.MAX_HP, 50);
-        this.stats.put(Stats.HP, 50);
-        this.stats.put(Stats.ATTACK, 10);
-        this.stats.put(Stats.DEFENSE, 5);
-        this.stats.put(Stats.EXPERIENCE, 15);
-        this.stats.put(Stats.GOLD, 20);
-
-        // Agregar la imagen del enemigo al caché
-        ImageCache.addImage("rookie_goblin", "C:\\Users\\HUAWEI\\IdeaProjects\\Cheetos-de-bolita\\Resource\\RookieGoblin.png");
-    }
-
-    @Override
-    public ImageIcon getSprite() {
-        // Recuperar la imagen del caché
-        return ImageCache.getImageIcon("rookie_goblin");
+        super();
+        ImageCache.addImage("rookie_goblin", "enemies/goblins/rookie_goblin.png");
     }
 
     @Override
     public void getLoot() {
-        // Implementación para obtener el botín
-        System.out.println("El Rookie Goblin dejó caer oro y un objeto básico.");
+        System.out.println("The Rookie Goblin drops a small bag of coins.");
     }
 
     @Override
-    public void attack(GameCharacter enemy) {
-        // Implementación del ataque
-        int damage = this.stats.get(Stats.ATTACK) - enemy.getStats().getOrDefault(Stats.DEFENSE, 0);
-        damage = Math.max(damage, 0); // Asegurarse de que no haya daño negativo
-        enemy.takeDamage(damage);
-        System.out.println(this.name + " atacó a " + enemy.getName() + " causando " + damage + " de daño.");
+    protected void initCharacter() {
+        this.type = EnemyType.BASIC;
+        stats.put(Stats.HP, 30);
+        stats.put(Stats.MAX_HP, 30);
+        stats.put(Stats.ATTACK, 7);
+        stats.put(Stats.DEFENSE, 3);
+        stats.put(Stats.EXPERIENCE, 10);
+        stats.put(Stats.GOLD, 5);
     }
 
     @Override
-    protected void initializeStats() {
+    public String attack(GameCharacter enemy) {
+        String message = "";
+        int damage = stats.get(Stats.ATTACK) - enemy.getStats().get(Stats.DEFENSE);
+        if (damage > 0) {
+            try {
+                int newHP = reduceHP(enemy, damage);
+                message += String.format("""
+                        The %s attacks for %d damage!
+                        The enemy now has %d HP.
+                        """, this.name, damage, newHP);
+            } catch (EnemyDeathException e) {
+                message += String.format("""
+                        The %s attacks for %d damage!
+                        The enemy has 0 HP and has died.
+                        """, this.name, damage);
+            }
+        }
+        return message;
+    }
 
+    @Override
+    public ImageIcon getSprite() {
+        return new ImageIcon(getClass().getResource("/resources/enemies/goblins/rookie_goblin.png"));
     }
 }

@@ -19,7 +19,6 @@ public class Randomize {
         return switch (enemyType) {
             case 0 -> new WoodBear();
             case 1 -> new EnemyB() {
-                @Override
                 protected void initializeStats() {
 
                 }
@@ -35,12 +34,17 @@ public class Randomize {
                 }
 
                 @Override
-                public void attack(GameCharacter enemy) {
+                protected void initCharacter() {
 
+                }
+
+                @Override
+                public String attack(GameCharacter enemy) {
+
+                    return null;
                 }
             };
             case 2 -> new EnemyC() {
-                @Override
                 protected void initializeStats() {
 
                 }
@@ -56,12 +60,17 @@ public class Randomize {
                 }
 
                 @Override
-                public void attack(GameCharacter enemy) {
+                protected void initCharacter() {
 
+                }
+
+                @Override
+                public String attack(GameCharacter enemy) {
+
+                    return null;
                 }
             };
             case 3 -> new EnemyD() {
-                @Override
                 protected void initializeStats() {
 
                 }
@@ -73,16 +82,19 @@ public class Randomize {
 
                 @Override
                 public void getLoot() {
-
                 }
 
                 @Override
-                public void attack(GameCharacter enemy) {
+                protected void initCharacter() {
+                }
 
+                @Override
+                public String attack(GameCharacter enemy) {
+
+                    return null;
                 }
             };
             case 4 -> new EnemyE() {
-                @Override
                 protected void initializeStats() {
 
                 }
@@ -97,13 +109,17 @@ public class Randomize {
 
                 }
 
-                @Override
-                public void attack(GameCharacter enemy) {
+                protected void initCharacter() {
 
+                }
+
+                @Override
+                public String attack(GameCharacter enemy) {
+
+                    return null;
                 }
             };
             default -> new EnemyC() {
-                @Override
                 protected void initializeStats() {
 
                 }
@@ -118,11 +134,24 @@ public class Randomize {
 
                 }
 
-                @Override
-                public void attack(GameCharacter enemy) {
+                protected void initCharacter() {
 
+                }
+
+                @Override
+                public String attack(GameCharacter enemy) {
+
+                    return null;
                 }
             }; // Por defecto si algo falla
         };
+    }
+
+    public static Integer getRandomInt(int i, int i1) {
+        return null;
+    }
+
+    public static boolean getRandomBoolean() {
+        return false;
     }
 }

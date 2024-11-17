@@ -18,4 +18,15 @@ public abstract class Item {
     public ItemType getType() {
         return type;
     }
+
+    public Object getDescription() {
+        return null;
+    }
+
+    public Object getPrice() {
+        return null;
+    }
+
+    public void increaseQuantity(int i) {
+    }
 }

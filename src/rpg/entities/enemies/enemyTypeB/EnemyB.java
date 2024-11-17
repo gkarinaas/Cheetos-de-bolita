@@ -4,6 +4,6 @@ import rpg.entities.enemies.Enemy;
 
 public abstract class EnemyB extends Enemy {
     public EnemyB() {
-        super("CABALLERO");
+        super();
     }
 }
