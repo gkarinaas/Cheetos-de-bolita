@@ -3,22 +3,21 @@ package rpg.factory;
 import rpg.entities.enemies.Enemy;
 import rpg.entities.enemies.RookieGoblin;
 import rpg.entities.enemies.WarriorOrc;
+
 import java.util.Random;
 
 public class EnemyFactory {
-
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     public static Enemy getEnemy() {
-        int randomNumber = random.nextInt(2);  // Ajusta el rango según la cantidad de enemigos
+        // Lista de enemigos posibles
+        Enemy[] enemies = {
+                new RookieGoblin(),
+                new WarriorOrc(),
+        };
 
-        switch (randomNumber) {
-            case 0:
-                return new RookieGoblin();  // Retorna un RookieGoblin
-            case 1:
-                return new WarriorOrc();    // Retorna un WarriorOrc
-            default:
-                return null;  // Debería ser imposible llegar aquí
-        }
+        // Selección aleatoria
+        int index = RANDOM.nextInt(enemies.length);
+        return enemies[index];
     }
 }
