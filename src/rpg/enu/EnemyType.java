@@ -5,5 +5,5 @@ public enum EnemyType {
     CABALLERO,
     DRAGON,
     ZOMBIE,
-    VAMPIRE, BASIC;
+    VAMPIRE, BASIC, INTERMEDIATE;
 }

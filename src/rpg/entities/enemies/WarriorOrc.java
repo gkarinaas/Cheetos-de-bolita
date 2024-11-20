@@ -8,29 +8,30 @@ import rpg.utils.cache.ImageCache;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
-public class RookieGoblin extends Enemy {
+public class WarriorOrc extends Enemy {
 
-    public RookieGoblin() {
-        super("Rookie Goblin", 30, 7, EnemyType.BASIC);
-        ImageCache.addImage("rookie_goblin", "hongo.png");
-        initCharacter(); // Inicializa las estadísticas del goblin
+    public WarriorOrc() {
+        super("Warrior Orc", 50, 12, EnemyType.INTERMEDIATE);
+        ImageCache.addImage("warrior_orc", "monoenojao.png");
+        initCharacter(); // Inicializa las estadísticas del orco
     }
 
     @Override
     public void getLoot() {
-        System.out.println("The Rookie Goblin drops a small bag of coins.");
+        System.out.println("The Warrior Orc drops a shiny sword.");
     }
 
     @Override
     protected void initCharacter() {
-        this.type = EnemyType.BASIC;
-        stats.put(Stats.HP, 30);
-        stats.put(Stats.MAX_HP, 30);
-        stats.put(Stats.ATTACK, 7);
-        stats.put(Stats.DEFENSE, 3);
-        stats.put(Stats.EXPERIENCE, 10);
-        stats.put(Stats.GOLD, 5);
+        this.type = EnemyType.INTERMEDIATE;
+        stats.put(Stats.HP, 50);
+        stats.put(Stats.MAX_HP, 50);
+        stats.put(Stats.ATTACK, 12);
+        stats.put(Stats.DEFENSE, 5);
+        stats.put(Stats.EXPERIENCE, 20);
+        stats.put(Stats.GOLD, 15);
     }
 
     @Override
@@ -41,12 +42,12 @@ public class RookieGoblin extends Enemy {
             try {
                 int newHP = reduceHP(enemy, damage);
                 message += String.format("""
-                        The %s attacks for %d damage!
+                        The %s swings its weapon for %d damage!
                         The enemy now has %d HP.
                         """, this.name, damage, newHP);
             } catch (EnemyDeathException e) {
                 message += String.format("""
-                        The %s attacks for %d damage!
+                        The %s swings its weapon for %d damage!
                         The enemy has 0 HP and has died.
                         """, this.name, damage);
             }
@@ -57,7 +58,7 @@ public class RookieGoblin extends Enemy {
     }
 
     public ImageIcon getSprite() {
-        ImageIcon icon = new ImageIcon(getClass().getResource("/hongo.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/monoenojao.png"));
         if (icon.getImageLoadStatus() != MediaTracker.COMPLETE) {
             System.out.println("Error al cargar la imagen RookieGoblin: " + icon.getImageLoadStatus());
         }

@@ -6,7 +6,8 @@ import rpg.enu.Stats;
 import gui.Labels.NameLabel;
 import gui.Labels.GoldLabel;
 import rpg.Player;
-import rpg.entities.enemies.RookieGoblin;
+import rpg.entities.enemies.Enemy;
+import rpg.factory.EnemyFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -27,7 +28,10 @@ public class MainWindow extends JFrame {
 
     // Jugador y enemigo
     private Player player;
-    private RookieGoblin enemy;
+    private Enemy enemy;
+
+    // JLabel para mostrar la imagen del enemigo
+    private JLabel enemyImageLabel;
 
     public MainWindow() {
         setTitle("RPG Game");
@@ -35,9 +39,8 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Inicializar jugador y enemigo
+        // Inicializar jugador
         player = new Player("Cowboy", 100, 20, 10); // Ajustar según constructor de Player
-        enemy = new RookieGoblin("Goblin Novato", 50, 15); // Ajustar según constructor de RookieGoblin
 
         createUIComponents();
         addComponentsToFrame();
@@ -151,15 +154,21 @@ public class MainWindow extends JFrame {
         JPanel imagesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 300, 0));
         imagesPanel.setOpaque(false);
 
+        // Imagen del jugador
         JLabel imagenJuego = new JLabel(cargarImagenDesdeClasspath("/personaje.png", 80, 80));
-        JLabel segundaImagen = new JLabel(cargarImagenDesdeClasspath("/RookieGoblin.png", 80, 80));
 
+        // JLabel para el enemigo
+        enemyImageLabel = new JLabel();
+
+        // Agregar las imágenes al panel
         imagesPanel.add(imagenJuego);
-        imagesPanel.add(segundaImagen);
+        imagesPanel.add(enemyImageLabel);
 
         panelJuego.add(imagesPanel, BorderLayout.SOUTH);
         return panelJuego;
     }
+
+
 
     private ImageIcon cargarImagenDesdeClasspath(String path, int width, int height) {
         ImageIcon icon = new ImageIcon(getClass().getResource(path));
@@ -169,13 +178,34 @@ public class MainWindow extends JFrame {
     }
 
     private void handleAttackAction(ActionEvent e) {
+        // Generar un enemigo aleatorio
+        enemy = EnemyFactory.getEnemy();
+
+        if (enemy == null) {
+            appendText("No se pudo generar un enemigo.");
+            return;
+        }
+
+        // Mostrar la imagen del enemigo
+        ImageIcon sprite = enemy.getSprite();
+        if (sprite == null) {
+            appendText("No se pudo cargar la imagen del enemigo: " + enemy.getName());
+        } else {
+            // Establecer la imagen del enemigo
+            enemyImageLabel.setIcon(sprite);
+            enemyImageLabel.revalidate();
+            enemyImageLabel.repaint();
+        }
+
+        // Mostrar los ataques y resultados
         String playerAttack = player.attack(enemy);
         String enemyAttack = enemy.attack(player);
 
+        appendText("Te enfrentas a: " + enemy.getName());
         appendText(playerAttack);
         appendText(enemyAttack);
 
-        // Actualizar barras de vida
+        // Actualizar la barra de vida del jugador
         lifeLabel.setValue(player.getStats().get(Stats.HP));
         if (enemy.getStats().get(Stats.HP) <= 0) {
             appendText("¡Has derrotado al enemigo!");

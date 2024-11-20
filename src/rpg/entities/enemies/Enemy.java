@@ -9,7 +9,7 @@ public abstract class Enemy extends GameCharacter {
 
     protected EnemyType type;
 
-    public Enemy() {
+    public Enemy(String rookieGoblin, int i, int i1, EnemyType basic) {
         super();
     }
 

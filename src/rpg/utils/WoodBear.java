@@ -2,12 +2,13 @@ package rpg.utils;
 
 import rpg.GameCharacter;
 import rpg.entities.enemies.Enemy;
+import rpg.enu.EnemyType;
 
 import javax.swing.*;
 
 public class WoodBear extends Enemy {
     public WoodBear() {
-        super();
+        super("Rookie Goblin", 30, 7, EnemyType.BASIC);
     }
 
     @Override
