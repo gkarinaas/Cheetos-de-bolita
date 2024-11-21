@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class StartWindow extends JFrame {
     private JPanel mainPanel;
@@ -49,6 +51,22 @@ public class StartWindow extends JFrame {
             // Botón para nueva partida
             JButton newGameButton = createButton("Nueva Partida");
 
+            // Acción para cargar partida
+            loadButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    openMainWindow();
+                }
+            });
+
+            // Acción para nueva partida
+            newGameButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    openMainWindow();
+                }
+            });
+
             // Añadir al panel
             centerPanel.add(fileLabel);
             centerPanel.add(loadButton);
@@ -66,6 +84,17 @@ public class StartWindow extends JFrame {
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createLineBorder(new Color(131, 1, 101), 2, true));
         return button;
+    }
+
+    private void openMainWindow() {
+        // Ocultar la ventana actual
+        this.dispose();
+
+        // Abrir la ventana principal
+        SwingUtilities.invokeLater(() -> {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.setVisible(true);
+        });
     }
 
     public static void main(String[] args) {

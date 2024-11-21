@@ -131,4 +131,12 @@ public class Player extends GameCharacter implements Serializable {
 
     public void equipWeapon(Weapon item) {
     }
+
+    public boolean isDead() {
+        return false;
+    }
+
+    public int getAttack() {
+        return 0;
+    }
 }

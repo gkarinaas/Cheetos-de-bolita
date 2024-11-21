@@ -82,9 +82,6 @@ public class RPGGame {
         if (item instanceof Armor) {
             player.equipArmor((Armor) item);
             JOptionPane.showMessageDialog(null, itemName + " equipado como armadura.");
-        } else if (item instanceof Weapon) {
-            player.equipWeapon((Weapon) item);
-            JOptionPane.showMessageDialog(null, itemName + " equipado como arma.");
         } else {
             JOptionPane.showMessageDialog(null, "No puedes equipar este ítem.");
         }

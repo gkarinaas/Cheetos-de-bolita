@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import gui.Buttons.AttackButton;
 import gui.Buttons.FleeButton;
@@ -12,6 +13,7 @@ import rpg.Player;
 import rpg.entities.enemies.Enemy;
 import rpg.factory.EnemyFactory;
 import rpg.enu.Stats;
+
 
 public class MainWindow extends JFrame {
 
@@ -23,12 +25,16 @@ public class MainWindow extends JFrame {
     private JLabel playerSpriteLabel, enemySpriteLabel, enemyNameLabel, enemyLifeLabel;
     private JButton attackButton, fleeButton, abilitiesButton;
     private Enemy currentEnemy;
+    private Player player;
 
     public MainWindow() {
         setTitle("RPG Game");
         setSize(1400, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+
+        // Inicialización de jugador para que pueda interactuar
+        this.player = new Player("Cowboy", 10, 100, 50);  // Ajustar según tu implementación
 
         createTopPanel();
         createCenterPanel();
@@ -130,6 +136,28 @@ public class MainWindow extends JFrame {
         abilitiesButton.setUI(new UserHoverUI()); // Estilización
         abilitiesButton.setOpaque(false);
 
+        // Acción de botones
+        attackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleAttackAction();
+            }
+        });
+
+        abilitiesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                appendText("¡Has usado una habilidad!");
+            }
+        });
+
+        fleeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                appendText("¡Has huido del combate!");
+            }
+        });
+
         actionPanel.add(attackButton);
         actionPanel.add(abilitiesButton);
         actionPanel.add(fleeButton);
@@ -142,7 +170,6 @@ public class MainWindow extends JFrame {
         bottomPanel.add(actionPanel, BorderLayout.WEST);
         bottomPanel.add(textScroll, BorderLayout.CENTER);
     }
-
 
     private void configureMessageArea() {
         textScroll.getViewport().setOpaque(false);
@@ -199,22 +226,77 @@ public class MainWindow extends JFrame {
         enemyLifeLabel.setText("Vida: " + currentEnemy.getStats().get(Stats.HP));
     }
 
-    private void handleAttackAction(ActionEvent e) {
+    private void handleAttackAction() {
         if (currentEnemy == null) {
             appendText("No hay enemigo para atacar.");
             return;
         }
 
-        appendText("Atacaste al enemigo y le infligiste daño.");
+        // Simula el daño del jugador al enemigo
+        int playerAttackDamage = player.getAttack(); // Daño de ataque del jugador
+        int enemyCurrentHP = currentEnemy.getStats().get(Stats.HP);
+        enemyCurrentHP -= playerAttackDamage; // Resta el daño del jugador a la vida del enemigo
 
-        int currentHP = currentEnemy.getStats().get(Stats.HP);
-        if (currentHP <= 0) {
+        // Actualiza la vida del enemigo
+        currentEnemy.getStats().put(Stats.HP, enemyCurrentHP);
+
+        appendText("Atacaste al enemigo y le infligiste " + playerAttackDamage + " de daño.");
+
+        // Verifica si el enemigo sigue vivo
+        if (enemyCurrentHP <= 0) {
             appendText("¡Has derrotado al enemigo!");
-            updateEnemyPanel(); // Generar un nuevo enemigo
-        } else {
-            appendText("El enemigo aún tiene vida.");
+            updateEnemyPanel(); // Genera un nuevo enemigo
+            return;
+        }
+
+        appendText("El enemigo tiene ahora " + enemyCurrentHP + " de vida.");
+
+        // Si el enemigo sigue vivo, contraataca
+        int enemyAttackDamage = currentEnemy.getStats().get(Stats.ATTACK); // Daño del enemigo
+        int playerCurrentHP = player.getStats().get(Stats.HP);
+        playerCurrentHP -= enemyAttackDamage; // Resta el daño del enemigo a la vida del jugador
+
+        // Actualiza la vida del jugador
+        player.getStats().put(Stats.HP, playerCurrentHP);
+
+        appendText("El enemigo te contraatacó e infligió " + enemyAttackDamage + " de daño.");
+        appendText("Tu vida actual es " + playerCurrentHP + ".");
+
+        // Actualiza la barra de vida del jugador
+        lifeBar.setValue(playerCurrentHP);
+
+        // Verifica si el jugador sigue vivo
+        if (playerCurrentHP <= 0) {
+            appendText("¡Has sido derrotado!");
+            attackButton.setEnabled(false); // Desactiva el botón de ataque si el jugador muere
         }
     }
+
+
+
+    // Método que devuelve el enemigo actual
+    public Enemy getCurrentEnemy() {
+        return currentEnemy; // Devuelve el enemigo que está siendo combatido
+    }
+
+    // Método que devuelve el jugador actual
+    public Player getPlayer() {
+        return player; // Devuelve el jugador que está en el juego
+    }
+
+    // Método para verificar el estado del juego
+    public void checkGameStatus() {
+        if (player.getStats().get(Stats.HP) <= 0) {
+            appendText("¡Has sido derrotado!");
+            // Aquí puedes añadir más lógica para terminar el juego o reiniciarlo
+        } else if (currentEnemy == null) {
+            appendText("No hay enemigo para luchar.");
+            // Puedes generar un nuevo enemigo o mostrar algún mensaje.
+        } else {
+            appendText("Todo está en orden, el combate continúa.");
+        }
+    }
+
 
     public void appendText(String text) {
         textDisplay.append(text + "\n");
@@ -223,17 +305,5 @@ public class MainWindow extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new MainWindow().setVisible(true));
-    }
-
-
-    public void checkGameStatus() {
-    }
-
-    public Enemy getCurrentEnemy() {
-        return null;
-    }
-
-    public Player getPlayer() {
-        return null;
     }
 }

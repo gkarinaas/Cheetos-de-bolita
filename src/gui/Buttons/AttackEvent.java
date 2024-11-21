@@ -15,8 +15,8 @@ public class AttackEvent implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Enemy enemy = game.getCurrentEnemy();
-        Player player = game.getPlayer();
+        Enemy enemy = game.getCurrentEnemy(); // Obtener el enemigo actual
+        Player player = game.getPlayer(); // Obtener el jugador actual
 
         if (enemy != null) {
             game.appendText(player.attack(enemy)); // Realiza el ataque del jugador
@@ -26,10 +26,11 @@ public class AttackEvent implements ActionListener {
                 game.appendText("¡Has derrotado al enemigo!");
                 game.updateEnemyPanel(); // Generar nuevo enemigo
             }
-            game.checkGameStatus();
+            game.checkGameStatus(); // Verificar el estado del juego
         } else {
             game.appendText("No hay enemigo para atacar.");
         }
     }
+
 }
 

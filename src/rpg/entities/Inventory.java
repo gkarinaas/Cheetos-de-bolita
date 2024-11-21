@@ -65,9 +65,6 @@ public class Inventory {
     public ArrayList<Weapon> listWeapons() {
         ArrayList<Weapon> weapons = new ArrayList<>();
         for (Item item : items) {
-            if (item instanceof Weapon) {
-                weapons.add((Weapon) item);
-            }
         }
         return weapons;
     }
