@@ -80,7 +80,7 @@ public class jframe extends JFrame {
         barraAccion.add(imagenAccion);
 
         /** Botones de acción personalizados **/
-        AttackButton botonAtacar = new AttackButton();
+        AttackButton botonAtacar = new AttackButton(this);
         SaveButton botonGuardar = new SaveButton();
         ExitButton botonSalir = new ExitButton();
         InventoryButton botonInventario = new InventoryButton();

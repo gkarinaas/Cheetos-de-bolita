@@ -1,18 +1,24 @@
 package gui.ui;
 
+import java.awt.Font;
 import rpg.utils.cache.FontCache;
 
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+public class UIConstants {
 
-public interface UIConstants {
-    Font FONT = FontCache.addFont("PIXM", "fonts/M6X.ttf");
-    Font BAR_LABEL_FONT = FontCache.addFont("PAE", "fonts/PixelAE.ttf").deriveFont(16f);
-    int WINDOW_WIDTH = 1500;
-    int TOP_HEIGHT = 150;
-    int MIDDLE_HEIGHT = 320;
-    int BOTTOM_HEIGHT = 350;
-    Dimension BAR_ICON = new Dimension(58, 58);
-    Dimension BAR_DISPLAY = new Dimension(179, 58);
-    EmptyBorder EMPTY_BORDER = new EmptyBorder(14, 18, 18, 18);
+    // Asegúrate de que esta constante se inicialice correctamente
+    public static final Font FONT = loadFont();
+
+    private static Font loadFont() {
+        // Ruta de la fuente
+        String fontPath = "path/to/your/font.ttf"; // Asegúrate de que la ruta sea correcta
+        Font font = FontCache.addFont("CustomFont", fontPath);
+
+        if (font == null) {
+            // Si la fuente no se carga correctamente, se usa una fuente predeterminada
+            System.out.println("Usando fuente predeterminada debido a error al cargar la fuente personalizada.");
+            return new Font("Arial", Font.PLAIN, 12);  // Fuente predeterminada
+        }
+
+        return font.deriveFont(12f);  // Ajusta el tamaño si es necesario
+    }
 }

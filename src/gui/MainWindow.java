@@ -5,6 +5,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+import gui.Buttons.AttackButton;
+import gui.Buttons.FleeButton;
+import gui.ui.UserHoverUI;
+import rpg.Player;
 import rpg.entities.enemies.Enemy;
 import rpg.factory.EnemyFactory;
 import rpg.enu.Stats;
@@ -119,11 +123,12 @@ public class MainWindow extends JFrame {
         actionPanel.setPreferredSize(new Dimension(250, 200));
         actionPanel.setOpaque(false);
 
-        attackButton = new JButton("Atacar");
-        attackButton.addActionListener(this::handleAttackAction);
+        attackButton = new AttackButton(this); // Botón personalizado de ataque
+        fleeButton = new FleeButton(this);     // Botón personalizado de huir
 
         abilitiesButton = new JButton("Habilidades");
-        fleeButton = new JButton("Huir");
+        abilitiesButton.setUI(new UserHoverUI()); // Estilización
+        abilitiesButton.setOpaque(false);
 
         actionPanel.add(attackButton);
         actionPanel.add(abilitiesButton);
@@ -137,6 +142,7 @@ public class MainWindow extends JFrame {
         bottomPanel.add(actionPanel, BorderLayout.WEST);
         bottomPanel.add(textScroll, BorderLayout.CENTER);
     }
+
 
     private void configureMessageArea() {
         textScroll.getViewport().setOpaque(false);
@@ -170,7 +176,7 @@ public class MainWindow extends JFrame {
         return bar;
     }
 
-    private void updateEnemyPanel() {
+    public void updateEnemyPanel() {
         // Generar un enemigo aleatorio
         currentEnemy = EnemyFactory.getEnemy();
 
@@ -217,5 +223,17 @@ public class MainWindow extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new MainWindow().setVisible(true));
+    }
+
+
+    public void checkGameStatus() {
+    }
+
+    public Enemy getCurrentEnemy() {
+        return null;
+    }
+
+    public Player getPlayer() {
+        return null;
     }
 }
