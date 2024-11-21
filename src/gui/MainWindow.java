@@ -34,7 +34,7 @@ public class MainWindow extends JFrame {
         setLayout(new BorderLayout());
 
         // Inicialización de jugador para que pueda interactuar
-        this.player = new Player("Cowboy", 10, 100, 50);  // Ajustar según tu implementación
+        this.player = new Player("Cowboy", 10, 100, 50);
 
         createTopPanel();
         createCenterPanel();
@@ -50,22 +50,22 @@ public class MainWindow extends JFrame {
 
     private void createTopPanel() {
         topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(new Color(255, 233, 245));
-        topPanel.setPreferredSize(new Dimension(1400, 150));
+        topPanel.setBackground(new Color(173, 132, 154));
+        topPanel.setPreferredSize(new Dimension(1000, 100));
 
         // Panel para las etiquetas superiores
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         infoPanel.setOpaque(false);
 
-        playerPortraitLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/personaje.png"))
-                .getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
         playerNameLevelLabel = new JLabel("Cowboy (Nivel 10)");
         playerGoldLabel = new JLabel("Oro: 1000");
+        playerPortraitLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/iconohongo.png"))
+                .getImage().getScaledInstance(80, 50, Image.SCALE_SMOOTH)));
 
-        lifeBar = createProgressBar(100, 100, Color.RED);
-        energyBar = createProgressBar(50, 100, Color.BLUE);
-        expBar = createProgressBar(25, 100, Color.GREEN);
+        lifeBar = createProgressBar(100, 100, (new Color(252, 232, 242)));
+        energyBar = createProgressBar(50, 100, (new Color(116, 143, 86)));
+        expBar = createProgressBar(25, 100, (new Color(189, 169, 29)));
 
         infoPanel.add(playerPortraitLabel);
         infoPanel.add(playerNameLevelLabel);
@@ -81,8 +81,6 @@ public class MainWindow extends JFrame {
         leftButtonsPanel.setOpaque(false);
         leftButtonsPanel.add(new JButton("Inventario"));
         leftButtonsPanel.add(new JButton("Tienda"));
-        leftButtonsPanel.add(new JButton("Herrero"));
-        leftButtonsPanel.add(new JButton("Opciones"));
 
         topPanel.add(leftButtonsPanel, BorderLayout.WEST);
         topPanel.add(statsPanel, BorderLayout.CENTER);
@@ -91,7 +89,7 @@ public class MainWindow extends JFrame {
 
     private void createCenterPanel() {
         centerPanel = new JPanel(new GridLayout(1, 2));
-        centerPanel.setBackground(new Color(255, 233, 245));
+        centerPanel.setBackground(new Color(197, 165, 183));
 
         // Panel de sprites del jugador
         JPanel playerPanel = new JPanel();
@@ -121,7 +119,7 @@ public class MainWindow extends JFrame {
 
     private void createBottomPanel() {
         bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.setBackground(new Color(255, 233, 245));
+        bottomPanel.setBackground(new Color(173, 132, 154));
         bottomPanel.setPreferredSize(new Dimension(1400, 200));
 
         // Panel de botones de acción
@@ -129,8 +127,8 @@ public class MainWindow extends JFrame {
         actionPanel.setPreferredSize(new Dimension(250, 200));
         actionPanel.setOpaque(false);
 
-        attackButton = new AttackButton(this); // Botón personalizado de ataque
-        fleeButton = new FleeButton(this);     // Botón personalizado de huir
+        attackButton = new AttackButton(this); // Botón de ataque
+        fleeButton = new FleeButton(this);     // Botón de huir
 
         abilitiesButton = new JButton("Habilidades");
         abilitiesButton.setUI(new UserHoverUI()); // Estilización
@@ -197,7 +195,7 @@ public class MainWindow extends JFrame {
         JProgressBar bar = new JProgressBar(0, max);
         bar.setValue(value);
         bar.setForeground(color);
-        bar.setBackground(Color.DARK_GRAY);
+        bar.setBackground((new Color(67, 13, 54)));
         bar.setBorderPainted(false);
         bar.setPreferredSize(new Dimension(200, 20));
         return bar;
@@ -233,14 +231,12 @@ public class MainWindow extends JFrame {
         }
 
         // Simula el daño del jugador al enemigo
-        int playerAttackDamage = player.getAttack(); // Daño de ataque del jugador
+        int playerAttackDamage = player.getAttack(); // Obtén el daño de ataque del jugador
         int enemyCurrentHP = currentEnemy.getStats().get(Stats.HP);
-        enemyCurrentHP -= playerAttackDamage; // Resta el daño del jugador a la vida del enemigo
-
-        // Actualiza la vida del enemigo
-        currentEnemy.getStats().put(Stats.HP, enemyCurrentHP);
+        enemyCurrentHP -= playerAttackDamage;
 
         appendText("Atacaste al enemigo y le infligiste " + playerAttackDamage + " de daño.");
+        currentEnemy.getStats().put(Stats.HP, enemyCurrentHP); // Actualiza la vida del enemigo
 
         // Verifica si el enemigo sigue vivo
         if (enemyCurrentHP <= 0) {
@@ -252,15 +248,12 @@ public class MainWindow extends JFrame {
         appendText("El enemigo tiene ahora " + enemyCurrentHP + " de vida.");
 
         // Si el enemigo sigue vivo, contraataca
-        int enemyAttackDamage = currentEnemy.getStats().get(Stats.ATTACK); // Daño del enemigo
+        int enemyAttackDamage = currentEnemy.getStats().get(Stats.ATTACK);
         int playerCurrentHP = player.getStats().get(Stats.HP);
-        playerCurrentHP -= enemyAttackDamage; // Resta el daño del enemigo a la vida del jugador
-
-        // Actualiza la vida del jugador
-        player.getStats().put(Stats.HP, playerCurrentHP);
+        playerCurrentHP -= enemyAttackDamage;
 
         appendText("El enemigo te contraatacó e infligió " + enemyAttackDamage + " de daño.");
-        appendText("Tu vida actual es " + playerCurrentHP + ".");
+        player.getStats().put(Stats.HP, playerCurrentHP); // Actualiza la vida del jugador
 
         // Actualiza la barra de vida del jugador
         lifeBar.setValue(playerCurrentHP);
@@ -268,10 +261,10 @@ public class MainWindow extends JFrame {
         // Verifica si el jugador sigue vivo
         if (playerCurrentHP <= 0) {
             appendText("¡Has sido derrotado!");
+            // Aquí puedes añadir lógica para reiniciar el juego o mostrar la pantalla de fin de partida
             attackButton.setEnabled(false); // Desactiva el botón de ataque si el jugador muere
         }
     }
-
 
 
     // Método que devuelve el enemigo actual

@@ -9,7 +9,7 @@ public class StartWindow extends JFrame {
     private JPanel mainPanel;
 
     public StartWindow() {
-        setTitle("Java RPG");
+        setTitle("jueguito");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -25,7 +25,7 @@ public class StartWindow extends JFrame {
         mainPanel.setBackground(new Color(218, 195, 214));
 
         // Etiqueta de título
-        JLabel titleLabel = new JLabel("Java RPG", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Jueguito", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Pixelated", Font.BOLD, 36));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
