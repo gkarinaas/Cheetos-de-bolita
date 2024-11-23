@@ -1,4 +1,4 @@
-package gui;
+package gui.windows;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -290,6 +290,51 @@ public class MainWindow extends JFrame {
         }
     }
 
+    // Nuevo método para iniciar una partida nueva
+    public void startNewGame() {
+        this.player = new Player("Cowboy", 1, 100, 50); // Reemplaza con tu lógica de reinicio
+        updateEnemyPanel(); // Genera un enemigo nuevo
+        appendText("¡Nueva partida iniciada!");
+        updatePlayerBars(); // Actualiza las barras del jugador
+    }
+
+    // Nuevo método para cargar una partida desde un archivo
+    public void loadGame(String saveFilePath) {
+        try {
+            // Lógica para cargar el estado desde un archivo (por simplicidad, usa datos fijos aquí)
+            this.player = new Player("Cowboy Cargado", 5, 80, 40); // Ejemplo de datos cargados
+            updateEnemyPanel(); // Genera un enemigo nuevo
+            appendText("¡Partida cargada desde " + saveFilePath + "!");
+            updatePlayerBars();
+        } catch (Exception e) {
+            appendText("Error al cargar la partida: " + e.getMessage());
+        }
+    }
+
+    // Nuevo método para guardar la partida
+    private void saveGame() {
+        try {
+            // Simula el guardado (puedes agregar lógica para guardar en un archivo)
+            appendText("¡Partida guardada exitosamente!");
+        } catch (Exception e) {
+            appendText("Error al guardar la partida: " + e.getMessage());
+        }
+    }
+
+    // Nuevo botón para salir del juego
+    private void exitGame() {
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas salir?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            System.exit(0); // Cierra la aplicación
+        }
+    }
+
+    // Método para actualizar las barras del jugador
+    private void updatePlayerBars() {
+        lifeBar.setValue(player.getStats().get(Stats.HP)); // Actualiza barra de vida
+        energyBar.setValue(player.getStats().get(Stats.ENERGY)); // Actualiza barra de energía
+    }
 
     public void appendText(String text) {
         textDisplay.append(text + "\n");

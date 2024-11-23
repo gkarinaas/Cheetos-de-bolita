@@ -1,6 +1,6 @@
 package gui.Buttons;
 
-import gui.MainWindow;
+import gui.windows.MainWindow;
 import gui.jframe;
 import gui.ui.UserHoverUI;
 

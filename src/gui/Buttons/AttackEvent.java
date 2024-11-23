@@ -2,7 +2,7 @@ package gui.Buttons;
 
 import rpg.Player;
 import rpg.entities.enemies.Enemy;
-import gui.MainWindow;
+import gui.windows.MainWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

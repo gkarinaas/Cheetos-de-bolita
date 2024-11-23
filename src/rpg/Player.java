@@ -139,4 +139,12 @@ public class Player extends GameCharacter implements Serializable {
     public int getAttack() {
         return 0;
     }
+
+    public int getMaxHP() {
+        return 0;
+    }
+
+    public int getCurrentHP() {
+        return 0;
+    }
 }

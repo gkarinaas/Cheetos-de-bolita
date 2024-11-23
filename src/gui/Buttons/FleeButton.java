@@ -1,7 +1,6 @@
 package gui.Buttons;
 
-import gui.MainWindow;
-import gui.Buttons.FleeEvent;
+import gui.windows.MainWindow;
 import gui.ui.UserHoverUI;
 
 public class FleeButton extends UserButton {

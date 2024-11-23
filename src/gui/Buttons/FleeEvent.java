@@ -1,6 +1,6 @@
 package gui.Buttons;
 
-import gui.MainWindow;
+import gui.windows.MainWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
