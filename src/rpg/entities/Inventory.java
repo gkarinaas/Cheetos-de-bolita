@@ -79,7 +79,7 @@ public class Inventory {
         return miscItems;
     }
 
-    // Mostrar el inventario en pantalla
+    /** Mostrar el inventario en pantalla **/
     public void showInventory() {
         if (isEmpty()) {
             JOptionPane.showMessageDialog(null, "El inventario está vacío.");
@@ -94,7 +94,7 @@ public class Inventory {
         JOptionPane.showMessageDialog(null, inventoryList.toString());
     }
 
-    // Seleccionar un ítem del inventario
+    /** Seleccionar un ítem del inventario **/
     public Item selectItem() {
         if (isEmpty()) {
             JOptionPane.showMessageDialog(null, "El inventario está vacío.");

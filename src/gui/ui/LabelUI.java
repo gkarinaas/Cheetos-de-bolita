@@ -16,7 +16,7 @@ public class LabelUI extends BasicLabelUI {
 
     @Override
     protected void installDefaults(JLabel c) {
-        c.setOpaque(false); // Hace que el JLabel sea transparente
-        c.setBorder(null);  // Elimina el borde del JLabel para una apariencia más limpia
+        c.setOpaque(false); /** Hace que el JLabel sea transparente **/
+        c.setBorder(null);  /** Elimina el borde del JLabel para apariencia más limpia **/
     }
 }

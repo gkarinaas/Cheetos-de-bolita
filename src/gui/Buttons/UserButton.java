@@ -6,7 +6,7 @@ public abstract class UserButton extends BaseButton {
 
     public UserButton(String text) {
         super(text);
-        // Agregamos los iconos a la caché de imágenes.
+        /** Agregamos los iconos a la caché de imágenes **/
         setIcon(null);
         setRolloverIcon(null);
         setUI(new UserHoverUI());
@@ -14,6 +14,6 @@ public abstract class UserButton extends BaseButton {
 
     @Override
     protected void initIcons() {
-        // No se inicializan iconos.
+        /** No se inicializan iconos **/
     }
 }

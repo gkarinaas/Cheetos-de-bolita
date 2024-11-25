@@ -14,7 +14,7 @@ public class StartWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Crear los componentes principales de la interfaz
+        /** Crear los componentes principales de la interfaz **/
         createUIComponents();
 
         add(mainPanel, BorderLayout.CENTER);
@@ -22,36 +22,36 @@ public class StartWindow extends JFrame {
 
     private void createUIComponents() {
         mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(new Color(218, 195, 214));
+        mainPanel.setBackground(new Color(218, 195, 214)); /** color del panel superior **/
 
-        // Etiqueta de título
+        /** Etiqueta de título **/
         JLabel titleLabel = new JLabel("Jueguito", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Pixelated", Font.BOLD, 36));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         mainPanel.add(titleLabel, BorderLayout.NORTH);
 
-        // Panel central
+        /** Panel central **/
         JPanel centerPanel = new JPanel(new GridLayout(5, 3, 10, 10));
-        centerPanel.setBackground(new Color(218, 170, 202));
+        centerPanel.setBackground(new Color(218, 170, 202)); /** color del panl cemtral **/
         centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
         for (int i = 0; i < 5; i++) {
-            // Etiqueta para mostrar información del archivo
+            /** Etiqueta para mostrar información del archivo **/
             JLabel fileLabel = new JLabel((i < 2 ? "Jugador 1" + (i + 2) : "-- Vacío --"), SwingConstants.CENTER);
             fileLabel.setFont(new Font("Pixelated", Font.BOLD, 18));
             fileLabel.setForeground(Color.WHITE);
             fileLabel.setOpaque(false);
-            fileLabel.setBorder(BorderFactory.createLineBorder(new Color(170, 73, 138), 2, true));
+            fileLabel.setBorder(BorderFactory.createLineBorder(new Color(170, 73, 138), 2, true)); /** color de los bordes **/
 
-            // Botón para cargar partida
+            /** Botón para cargar partida **/
             JButton loadButton = createButton("Cargar Partida");
-            loadButton.setEnabled(i < 2); // Habilitar solo si hay una partida guardada
+            loadButton.setEnabled(i < 2); /** Habilitar solo si hay una partida guardada **/
 
-            // Botón para nueva partida
+            /** Botón para nueva partida **/
             JButton newGameButton = createButton("Nueva Partida");
 
-            // Acción para cargar partida
+            /** Acción para cargar partida **/
             loadButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -59,7 +59,7 @@ public class StartWindow extends JFrame {
                 }
             });
 
-            // Acción para nueva partida
+            /** Acción para nueva partida **/
             newGameButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -67,7 +67,7 @@ public class StartWindow extends JFrame {
                 }
             });
 
-            // Añadir al panel
+            /** Añadir al panel **/
             centerPanel.add(fileLabel);
             centerPanel.add(loadButton);
             centerPanel.add(newGameButton);
@@ -87,10 +87,10 @@ public class StartWindow extends JFrame {
     }
 
     private void openMainWindow() {
-        // Ocultar la ventana actual
+        /** Ocultar la ventana actual **/
         this.dispose();
 
-        // Abrir la ventana principal
+        /** Abrir la ventana principal **/
         SwingUtilities.invokeLater(() -> {
             MainWindow mainWindow = new MainWindow();
             mainWindow.setVisible(true);

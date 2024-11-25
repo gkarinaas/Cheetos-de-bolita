@@ -7,8 +7,8 @@ public class FleeButton extends UserButton {
 
     public FleeButton(MainWindow game) {
         super("Huir");
-        this.setUI(new UserHoverUI()); // Aplicar estilo visual
-        this.setOpaque(false); // Quitar opacidad
-        this.addActionListener(new gui.Buttons.FleeEvent(game)); // Asignar evento de huida
+        this.setUI(new UserHoverUI()); /** Aplica estilo visual **/
+        this.setOpaque(false); /** Quita opacidad **/
+        this.addActionListener(new gui.Buttons.FleeEvent(game)); /** Asigna evento de huida **/
     }
 }

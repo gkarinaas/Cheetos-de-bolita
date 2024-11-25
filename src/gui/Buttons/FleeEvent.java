@@ -16,6 +16,6 @@ public class FleeEvent implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         game.appendText("¡Has huido del combate!");
-        game.dispose(); // Cerrar la ventana de combate
+        game.dispose(); /** Cerrar la ventana de combate al huit **/
     }
 }

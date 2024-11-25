@@ -18,7 +18,7 @@ public class HoverButtonUI extends BasicButtonUI {
     protected void installDefaults(AbstractButton b) {
 
         initParts();
-        assert UIConstants.FONT != null; // Verifica que FONT no sea null
+        assert UIConstants.FONT != null; /** Verifica que FONT no sea nulo **/
         b.setFont(UIConstants.FONT.deriveFont(Font.PLAIN, 24));
         b.setForeground(Color.BLACK);
         b.setDoubleBuffered(true);
@@ -49,22 +49,22 @@ public class HoverButtonUI extends BasicButtonUI {
         return getPreferredSize(c);
     }
 
-    /**
-     * Inicializa las partes del botón.
-     * En sus estados normal y hover.
-     */
+    /**Inicializa las partes del botón en sus estados normal y hover**/
     protected void initParts() {
-        //Inicializamos los arreglos de imágenes.
+
+        /**Inicializa los arreglos de imágenes **/
         parts = new ImageIcon[3];
         partsHover = new ImageIcon[3];
-        // Agregamos las imágenes a la caché.
+
+        /** Agrega las imágenes a la caché **/
         ImageCache.addImage("userLeftSide", "corazon.png");
         ImageCache.addImage("userCenterSide", "corazon.png");
         ImageCache.addImage("userRightSide", "corazon.png");
         ImageCache.addImage("userHoverLeftSide", "corazon.png");
         ImageCache.addImage("userHoverCenterSide", "corazon.png");
         ImageCache.addImage("userHoverRightSide", "corazon.png");
-        // Obtenemos las imágenes de la caché y las almacenamos en los arreglos correspondientes.
+
+        /** Obtenemos las imágenes de la caché y las almacenamos en los arreglos correspondientes **/
         parts[0] = ImageCache.getImageIcon("userLeftSide");
         parts[1] = ImageCache.getImageIcon("userCenterSide");
         parts[2] = ImageCache.getImageIcon("userRightSide");

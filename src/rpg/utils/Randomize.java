@@ -14,7 +14,7 @@ public class Randomize {
 
     public static Enemy getRandomEnemy() {
         Random rand = new Random();
-        int enemyType = rand.nextInt(5); // Genera un número entre 0 y 4
+        int enemyType = rand.nextInt(5); /** Genera un número entre 0 y 4 **/
 
         return switch (enemyType) {
             case 0 -> new WoodBear();
@@ -143,7 +143,7 @@ public class Randomize {
 
                     return null;
                 }
-            }; // Por defecto si algo falla
+            }; /** Por defecto si algo falla **/
         };
     }
 

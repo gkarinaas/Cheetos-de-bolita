@@ -10,13 +10,13 @@ public class EnemyFactory {
     private static final Random RANDOM = new Random();
 
     public static Enemy getEnemy() {
-        // Lista de enemigos posibles
+        /** Lista de enemigos posibles **/
         Enemy[] enemies = {
                 new RookieGoblin(),
                 new WarriorOrc(),
         };
 
-        // Selección aleatoria
+        /** Selección aleatoria **/
         int index = RANDOM.nextInt(enemies.length);
         return enemies[index];
     }

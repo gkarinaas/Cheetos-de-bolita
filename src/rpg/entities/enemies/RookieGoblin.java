@@ -14,7 +14,7 @@ public class RookieGoblin extends Enemy {
     public RookieGoblin() {
         super("Rookie Goblin", 30, 7, EnemyType.BASIC);
         ImageCache.addImage("rookie_goblin", "hongo.png");
-        initCharacter(); // Inicializa las estadísticas del goblin
+        initCharacter(); /** Inicializa las estadísticas del goblin **/
     }
 
     @Override
@@ -62,9 +62,9 @@ public class RookieGoblin extends Enemy {
             System.out.println("Error al cargar la imagen RookieGoblin: " + icon.getImageLoadStatus());
         }
 
-        // Redimensionar la imagen a un tamaño más pequeño (por ejemplo, 50x50)
+        /** Redimensionar la imagen **/
         Image img = icon.getImage();
-        Image scaledImg = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH); // Cambia el tamaño aquí
+        Image scaledImg = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
 
         return new ImageIcon(scaledImg);
     }

@@ -7,7 +7,7 @@ public class NameLabel extends JLabel {
 
     private String playerName;
 
-    public NameLabel(String playerName) {
+    public NameLabel(String playerName) { /** etiqueta de nombre **/
         this.playerName = playerName;
         actualizarTexto();
         configurarEstilo();
@@ -27,7 +27,7 @@ public class NameLabel extends JLabel {
     }
 
     private void configurarEstilo() {
-        setForeground(new Color(165, 76, 140)); // Color azul
-        setFont(new Font("Arial", Font.BOLD, 14));
+        setForeground(new Color(165, 76, 140)); /** Color azul **/
+        setFont(new Font("Arial", Font.BOLD, 14)); /** fuente **/
     }
 }

@@ -15,7 +15,7 @@ public class WarriorOrc extends Enemy {
     public WarriorOrc() {
         super("Warrior Orc", 50, 12, EnemyType.INTERMEDIATE);
         ImageCache.addImage("warrior_orc", "monoenojao.png");
-        initCharacter(); // Inicializa las estadísticas del orco
+        initCharacter(); /** Inicializa las estadísticas del orco **/
     }
 
     @Override
@@ -63,9 +63,9 @@ public class WarriorOrc extends Enemy {
             System.out.println("Error al cargar la imagen RookieGoblin: " + icon.getImageLoadStatus());
         }
 
-        // Redimensionar la imagen a un tamaño más pequeño (por ejemplo, 50x50)
+        /** Redimensionar la imagen **/
         Image img = icon.getImage();
-        Image scaledImg = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH); // Cambia el tamaño aquí
+        Image scaledImg = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
 
         return new ImageIcon(scaledImg);
     }

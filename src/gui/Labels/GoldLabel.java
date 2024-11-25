@@ -8,7 +8,7 @@ public class GoldLabel extends JLabel {
     private int gold;
 
     public GoldLabel(String number) {
-        this.gold = 0; // Inicializar con 0 oro
+        this.gold = 0; /** Inicializar con 0 oro **/
         actualizarTexto();
         configurarEstilo();
     }
@@ -27,7 +27,7 @@ public class GoldLabel extends JLabel {
     }
 
     private void configurarEstilo() {
-        setForeground(new Color(165, 76, 140)); // Color dorado
+        setForeground(new Color(165, 76, 140)); /** Color dorado **/
         setFont(new Font("Arial", Font.BOLD, 14));
     }
 }

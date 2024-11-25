@@ -11,28 +11,28 @@ public class BarLabel extends JLabel {
     private int maxValue;
     private final BarType type;
 
-    public BarLabel(int value, int maxValue, BarType type) {
-        this.barValue = value;
-        this.maxValue = maxValue;
+    public BarLabel(int value, int maxValue, BarType type) { /** barra de etiquetas **/
+        this.barValue = value; /** valor de la barra **/
+        this.maxValue = maxValue; /** valor maximo **/
         this.type = type;
         initComponents();
     }
 
-    public void initComponents() {
+    public void initComponents() { /** inicializar componentes **/
         setBarValue(barValue);
         setUI(new BarLabelUI(type));
     }
 
-    public void setBarValue(int value) {
+    public void setBarValue(int value) { /** valor de la barra **/
         this.barValue = value;
         setText(String.format("%d / %d", value, maxValue));
     }
 
-    public int getBarValue() {
-        return barValue;
+    public int getBarValue() { /** obtener valor de la barra **/
+        return barValue; /** regresar valor de la barra **/
     }
 
-    public int getMaxValue() {
+    public int getMaxValue() { /** obtener valor maximo **/
         return maxValue;
     }
 

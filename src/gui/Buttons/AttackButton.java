@@ -8,10 +8,10 @@ public class AttackButton extends UserButton {
 
     public AttackButton(jframe mainWindow) {
         super("Atacar");
-        this.setUI(new UserHoverUI()); // Aplicar estilo visual
-        this.setOpaque(false); // Quitar opacidad
+        this.setUI(new UserHoverUI()); /** Aplicar estilo visual **/
+        this.setOpaque(false); /** Quitar opacidad **/
         MainWindow game = null;
-        this.addActionListener(new AttackEvent(game)); // Asignar evento de ataque
+        this.addActionListener(new AttackEvent(game)); /** Asignar evento de ataque **/
     }
 
     public AttackButton(MainWindow mainWindow) {

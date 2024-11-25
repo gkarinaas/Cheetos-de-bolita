@@ -7,6 +7,5 @@ public class ConcreteButton extends BaseButton {
 
     @Override
     protected void initIcons() {
-        // Implementa la lógica de inicialización de iconos aquí
     }
 }

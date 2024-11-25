@@ -24,9 +24,9 @@ public class UserHoverUI extends BasicButtonUI {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Dibujar el fondo del botón al pasar el mouse
+        /** Dibujar el fondo del botón al pasar el mouse **/
         if (button.getModel().isRollover()) {
-            g2.setColor(new Color(200, 200, 200, 100)); // Color de fondo al pasar el mouse
+            g2.setColor(new Color(200, 200, 200, 100)); /** Color de fondo al pasar el mouse **/
             g2.fillRect(0, 0, button.getWidth(), button.getHeight());
         }
 

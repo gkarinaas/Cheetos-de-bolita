@@ -6,7 +6,7 @@ import rpg.utils.cache.ImageCache;
 import javax.swing.*;
 import java.awt.*;
 
-public class PortraitLabel extends JLabel {
+public class PortraitLabel extends JLabel { /** etiqueta de retrato **/
 
     protected ImageIcon icon;
 
@@ -18,10 +18,10 @@ public class PortraitLabel extends JLabel {
 
     public void initComponents() {
         // Ruta de la imagen en el recurso
-        String imagePath = "/resource/player/portrait.png";  // Ajusta la ruta según la ubicación exacta
+        String imagePath = "/iconohongo.png";  /** ruta de la ubicación exacta **/
         System.out.println("Cargando imagen desde: " + imagePath);
 
-        // Cargar la imagen a través del ImageCache
+        /** Cargar la imagen a través del ImageCache **/
         ImageCache.addImage("portrait", imagePath);
         icon = ImageCache.getImageIcon("portrait");
 

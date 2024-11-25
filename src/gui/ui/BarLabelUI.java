@@ -20,8 +20,8 @@ public class BarLabelUI extends BasicLabelUI {
     protected void installDefaults(JLabel c) {
         c.setOpaque(false);
         c.setBorder(null);
-        c.setForeground(new Color(218, 195, 214));
-        c.setFont(new Font("Arial", Font.BOLD, 12));  // Ajusta la fuente
+        c.setForeground(new Color(218, 195, 214)); /** color **/
+        c.setFont(new Font("Arial", Font.BOLD, 12));  /** Ajusta la fuente **/
         c.setVerticalAlignment(JLabel.BOTTOM);
         c.setVerticalTextPosition(JLabel.BOTTOM);
         c.setHorizontalAlignment(JLabel.RIGHT);
@@ -30,7 +30,7 @@ public class BarLabelUI extends BasicLabelUI {
 
     @Override
     public Dimension getPreferredSize(JComponent c) {
-        return new Dimension(150, 50);  // Ajusta el tamaño de la barra
+        return new Dimension(150, 50);  /**  tamaño de la barra **/
     }
 
     @Override
@@ -41,10 +41,9 @@ public class BarLabelUI extends BasicLabelUI {
         BufferedImage container = type.getContainer();
         BufferedImage bar = type.getBar();
 
-        int barWidth = (int) ((double) barLabel.getBarValue() / barLabel.getMaxValue() * 150);  // Ajuste de ancho de la barra
-        g2d.drawImage(icon.getImage(), 0, 0, 20, 20, null);  // Icono
-        g2d.drawImage(container, 25, 0, 150, 20, null);  // Contenedor
-        g2d.setColor(new Color(170, 73, 138));  // Color de la barra
-        g2d.fillRect(25, 0, barWidth, 20);  // Barra de estado
+        int barWidth = (int) ((double) barLabel.getBarValue() / barLabel.getMaxValue() * 150);  /**ancho de la barra **/        g2d.drawImage(icon.getImage(), 0, 0, 20, 20, null);  // Icono
+        g2d.drawImage(container, 25, 0, 150, 20, null);  /** Contenedor **/
+        g2d.setColor(new Color(170, 73, 138));  /** Color de la barra **/
+        g2d.fillRect(25, 0, barWidth, 20);  /** Barra de estado **/
     }
 }
