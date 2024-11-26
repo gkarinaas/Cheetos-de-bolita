@@ -117,70 +117,108 @@ public class MainWindow extends JFrame {
         centerPanel.add(enemyPanel);
     }
 
-    private void createBottomPanel() { /** panel de botones **/
+    private void createBottomPanel() {
+        // Crear el panel principal en la parte inferior
         bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.setBackground(new Color(173, 132, 154)); /** color de fondo de panel **/
+        bottomPanel.setBackground(new Color(173, 132, 154));
         bottomPanel.setPreferredSize(new Dimension(1400, 200));
 
-        /** Panel de botones de acción **/
-        JPanel actionPanel = new JPanel(new GridLayout(1, 3));
-        actionPanel.setPreferredSize(new Dimension(250, 200));
+        // Crear el panel que contendrá los botones
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10)); // Espaciado entre los botones
         actionPanel.setOpaque(false);
 
-        attackButton = new AttackButton(this); /** Botón de ataque **/
-        fleeButton = new FleeButton(this);     /** Botón de huir **/
-
+        // Definir los botones y sus textos explícitamente
+        attackButton = new AttackButton(this); // Aseguramos que el texto esté definido en AttackButton
+        fleeButton = new JButton("Huir");
         abilitiesButton = new JButton("Habilidades");
-        abilitiesButton.setUI(new UserHoverUI()); /** Estilización **/
-        abilitiesButton.setOpaque(false);
 
-        /** Acción de botones **/
-        attackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleAttackAction();
-            }
-        });
+        // Personalizar los botones
+        styleButton(attackButton);
+        styleButton(fleeButton);
+        styleButton(abilitiesButton);
 
-        abilitiesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                appendText("¡Has usado una habilidad!");
-            }
-        });
+        // Añadir ActionListeners a los botones
+        attackButton.addActionListener(e -> handleAttack()); // Acción de atacar
+        fleeButton.addActionListener(e -> handleFlee());   // Acción de huir
+        abilitiesButton.addActionListener(e -> handleAbilities()); // Acción de habilidades
 
-        fleeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                appendText("¡Has huido del combate!");
-            }
-        });
-
+        // Añadir los botones al panel de acciones
         actionPanel.add(attackButton);
         actionPanel.add(abilitiesButton);
         actionPanel.add(fleeButton);
 
-        /** Área de mensajes **/
+        // Crear área de texto y su JScrollPane
         textDisplay = new JTextArea();
         textScroll = new JScrollPane(textDisplay);
-        configureMessageArea();
+        configureMessageArea(); // Método para configurar el área de texto
 
+        // Añadir el panel de acciones y el área de texto al panel principal
         bottomPanel.add(actionPanel, BorderLayout.WEST);
         bottomPanel.add(textScroll, BorderLayout.CENTER);
     }
 
-    private void configureMessageArea() {
-        textScroll.getViewport().setOpaque(false);
-        textScroll.setBorder(null);
-        textScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        textScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        textDisplay.setFont(new Font("Arial", Font.PLAIN, 28));
-        textDisplay.setForeground(Color.WHITE);
-        textDisplay.setColumns(1);
-        textDisplay.setEditable(false);
-        textDisplay.setLineWrap(true);
-        textDisplay.setWrapStyleWord(true);
+    // Acción de ataque
+    private void handleAttack() {
+        // Generar un daño aleatorio entre 10 y 50
+        int damage = (int) (Math.random() * 41) + 10; // Daño entre 10 y 50
+
+        // Cambiar el color del botón para simular un efecto visual
+        attackButton.setBackground(Color.RED); // Cambiar a color rojo
+        Timer timer = new Timer(500, e -> attackButton.setBackground(null)); // Volver al color original después de 500 ms
+        timer.setRepeats(false); // Asegurarse de que solo se ejecute una vez
+        timer.start();
+
+        // Mostrar un mensaje en el área de texto con el daño infligido
+        textDisplay.setText("¡Has atacado al enemigo y le has infligido " + damage + " puntos de daño!");
+
+        // Si deseas que el área de texto se actualice en tiempo real, puedes agregar un salto de línea y el mensaje
+        textDisplay.append("\n¡Es tu turno para seguir luchando!");
     }
+
+
+
+    // Acción de huir
+    private void handleFlee() {
+        System.out.println("¡Huir!");
+        // Aquí puedes añadir la lógica de lo que ocurre cuando se presiona "Huir"
+        // Por ejemplo, cerrar la ventana o cambiar el estado de la interfaz:
+        textDisplay.setText("¡Has huido!");
+        // Si quieres cerrar la ventana:
+        System.exit(0); // Cierra la aplicación
+    }
+
+    // Acción de habilidades
+    private void handleAbilities() {
+        System.out.println("¡Habilidades!");
+        // Aquí puedes añadir la lógica de lo que ocurre cuando se presiona "Habilidades"
+        textDisplay.setText("Seleccionaste habilidades.");
+    }
+
+
+
+
+    // Función para estilizar los botones
+    private void styleButton(JButton button) {
+        button.setFont(new Font("Arial", Font.BOLD, 16));  // Usar una fuente de tamaño 16
+        button.setPreferredSize(new Dimension(180, 60));  // Tamaño mayor para los botones
+        button.setMargin(new Insets(10, 10, 10, 10));  // Ajuste de espaciado interno
+        button.setBackground(new Color(100, 100, 100));  // Color de fondo del botón
+        button.setForeground(Color.WHITE);  // Color del texto
+        button.setFocusPainted(false);  // Eliminar borde de enfoque
+        button.setBorder(BorderFactory.createLineBorder(new Color(252, 232, 242), 2));  // Borde del botón
+        button.setHorizontalTextPosition(SwingConstants.CENTER);  // Centrado horizontal
+        button.setVerticalTextPosition(SwingConstants.CENTER);  // Centrado vertical
+    }
+
+
+
+    private void configureMessageArea() {
+        textDisplay.setEditable(false);  // No permitir la edición del área de texto
+        textDisplay.setLineWrap(true);    // Permitir el salto de línea
+        textDisplay.setWrapStyleWord(true); // Ajustar las palabras correctamente
+        textDisplay.setPreferredSize(new Dimension(400, 100)); // Ajustar el tamaño si es necesario
+    }
+
 
     private JPanel wrapComponentWithLabel(String labelText, JProgressBar progressBar) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
