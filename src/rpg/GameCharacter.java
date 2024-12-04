@@ -62,7 +62,7 @@ public abstract class GameCharacter implements Serializable {
         return newHP;
     }
 
-    public final String getName() {
+    public String getName() {
         return name;
     }
 

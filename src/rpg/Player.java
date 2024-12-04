@@ -1,18 +1,22 @@
 package rpg;
 
-import rpg.entities.items.armors.Armor;
-import rpg.entities.items.weapons.Weapon;
-import rpg.enu.Stats;
 import rpg.entities.Inventory;
 import rpg.entities.items.Item;
+import rpg.entities.items.armors.Armor;
 import rpg.entities.items.misc.Misc;
+import rpg.entities.items.weapons.Weapon;
+import rpg.enu.Stats;
 import rpg.utils.Randomize;
 
 import javax.swing.*;
-import java.io.*;
+import java.io.Serializable;
 
 public class Player extends GameCharacter implements Serializable {
     private final Inventory inventory;
+
+    // Límites máximos para estadísticas
+    public static final int MAX_ENERGY = 100;
+    public static final int MAX_EXPERIENCE = 100;
 
     public Player(String name, int i, int i1, int i2) {
         super();
@@ -33,6 +37,9 @@ public class Player extends GameCharacter implements Serializable {
         stats.put(Stats.DEFENSE, stats.get(Stats.DEFENSE) + Randomize.getRandomInt(1, 3));
         stats.put(Stats.NEEDED_EXPERIENCE, stats.get(Stats.NEEDED_EXPERIENCE) + 50);
         stats.put(Stats.EXPERIENCE, 0);
+
+        // Recargar energía al subir de nivel
+        stats.put(Stats.ENERGY, MAX_ENERGY);
     }
 
     @Override
@@ -47,6 +54,26 @@ public class Player extends GameCharacter implements Serializable {
         stats.put(Stats.EXPERIENCE, 0);
         stats.put(Stats.NEEDED_EXPERIENCE, 100);
         stats.put(Stats.GOLD, 0);
+        stats.put(Stats.ENERGY, MAX_ENERGY); // Energía inicial
+    }
+
+    public void adjustHP(int amount) {
+        int newHP = stats.get(Stats.HP) + amount;
+        stats.put(Stats.HP, Math.max(0, Math.min(newHP, stats.get(Stats.MAX_HP))));
+    }
+
+    public void adjustEnergy(int amount) {
+        int newEnergy = stats.get(Stats.ENERGY) + amount;
+        stats.put(Stats.ENERGY, Math.max(0, Math.min(newEnergy, MAX_ENERGY)));
+    }
+
+    public void adjustExperience(int amount) {
+        int newExperience = stats.get(Stats.EXPERIENCE) + amount;
+        if (newExperience >= stats.get(Stats.NEEDED_EXPERIENCE)) {
+            levelUp();
+        } else {
+            stats.put(Stats.EXPERIENCE, Math.min(newExperience, MAX_EXPERIENCE));
+        }
     }
 
     public void addItemToInventory(Item item) {
@@ -82,8 +109,6 @@ public class Player extends GameCharacter implements Serializable {
                         if ((int) misc.getQuantity() == 0) {
                             inventory.removeItem(i);
                         }
-
-
                         break;
                     }
                 }
@@ -133,18 +158,18 @@ public class Player extends GameCharacter implements Serializable {
     }
 
     public boolean isDead() {
-        return false;
+        return stats.get(Stats.HP) <= 0;
     }
 
     public int getAttack() {
-        return 0;
+        return stats.get(Stats.ATTACK);
     }
 
     public int getMaxHP() {
-        return 0;
+        return stats.get(Stats.MAX_HP);
     }
 
     public int getCurrentHP() {
-        return 0;
+        return stats.get(Stats.HP);
     }
 }

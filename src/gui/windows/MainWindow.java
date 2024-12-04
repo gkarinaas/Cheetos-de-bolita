@@ -50,7 +50,7 @@ public class MainWindow extends JFrame {
 
     private void createTopPanel() {
         topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(new Color(173, 132, 154));
+        topPanel.setBackground(new Color(165, 76, 140));
         topPanel.setPreferredSize(new Dimension(1000, 100));
 
         /** Panel para las etiquetas superiores **/
@@ -63,9 +63,9 @@ public class MainWindow extends JFrame {
         playerPortraitLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/iconohongo.png"))
                 .getImage().getScaledInstance(80, 50, Image.SCALE_SMOOTH)));
 
-        lifeBar = createProgressBar(100, 100, (new Color(252, 232, 242))); /** barra de vida **/
-        energyBar = createProgressBar(50, 100, (new Color(116, 143, 86))); /** barra de energia **/
-        expBar = createProgressBar(25, 100, (new Color(189, 169, 29))); /** barra de experiencia **/
+        lifeBar = createProgressBar(100, 100, (new Color(194, 236, 171))); /** barra de vida **/
+        energyBar = createProgressBar(50, 100, (new Color(211, 203, 135))); /** barra de energía **/
+        expBar = createProgressBar(25, 100, (new Color(109, 155, 213))); /** barra de experiencia **/
 
         infoPanel.add(playerPortraitLabel);
         infoPanel.add(playerNameLevelLabel);
@@ -77,103 +77,240 @@ public class MainWindow extends JFrame {
         statsPanel.add(wrapComponentWithLabel("Experiencia:", expBar));
         statsPanel.setOpaque(false);
 
-        JPanel leftButtonsPanel = new JPanel(new GridLayout(4, 1));
-        leftButtonsPanel.setOpaque(false);
-        leftButtonsPanel.add(new JButton("Inventario"));
-        leftButtonsPanel.add(new JButton("Tienda"));
-
-        topPanel.add(leftButtonsPanel, BorderLayout.WEST);
         topPanel.add(statsPanel, BorderLayout.CENTER);
         topPanel.add(infoPanel, BorderLayout.EAST);
     }
 
+
     private void createCenterPanel() {
         centerPanel = new JPanel(new GridLayout(1, 2));
-        centerPanel.setBackground(new Color(197, 165, 183)); /** fondo del panel superior **/
+        centerPanel.setBackground(new Color(218, 170, 202)); // Fondo del panel central
 
-        /** Panel de sprites del jugador **/
-        JPanel playerPanel = new JPanel();
+        // Panel del jugador
+        JPanel playerPanel = new JPanel(new GridBagLayout());
         playerPanel.setOpaque(false);
-        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
 
-        playerSpriteLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/personaje.png")) /** imagen del personaje **/
+        // Imagen del jugador centrada
+        playerSpriteLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource("/personaje.png"))
                 .getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
-        playerPanel.add(playerSpriteLabel);
+        playerPanel.add(playerSpriteLabel, new GridBagConstraints());
 
-        /** Panel de sprites del enemigo **/
-        JPanel enemyPanel = new JPanel();
+        // Panel del enemigo
+        JPanel enemyPanel = new JPanel(new GridBagLayout());
         enemyPanel.setOpaque(false);
-        enemyPanel.setLayout(new BoxLayout(enemyPanel, BoxLayout.Y_AXIS));
 
+        // Imagen del enemigo centrada
         enemySpriteLabel = new JLabel();
-        enemyNameLabel = new JLabel();
-        enemyLifeLabel = new JLabel();
+        enemyNameLabel = new JLabel("Nombre del enemigo");
+        enemyLifeLabel = new JLabel("Vida del enemigo");
 
-        enemyPanel.add(enemyNameLabel);
-        enemyPanel.add(enemySpriteLabel);
-        enemyPanel.add(enemyLifeLabel);
+        // Agregar los componentes del enemigo centrados
+        enemyPanel.add(enemyNameLabel, createGridBagConstraints(0, 0));
+        enemyPanel.add(enemySpriteLabel, createGridBagConstraints(0, 1));
+        enemyPanel.add(enemyLifeLabel, createGridBagConstraints(0, 2));
 
+        // Añadir los paneles al panel central
         centerPanel.add(playerPanel);
         centerPanel.add(enemyPanel);
+    }
+
+    // Método auxiliar para crear GridBagConstraints predeterminados
+    private GridBagConstraints createGridBagConstraints(int gridx, int gridy) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        gbc.insets = new Insets(10, 10, 10, 10); // Márgenes entre componentes
+        gbc.anchor = GridBagConstraints.CENTER; // Centrados
+        return gbc;
     }
 
     private void createBottomPanel() {
         // Crear el panel principal en la parte inferior
         bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.setBackground(new Color(173, 132, 154));
+        bottomPanel.setBackground(new Color(170, 73, 138));
         bottomPanel.setPreferredSize(new Dimension(1400, 200));
 
         // Crear el panel que contendrá los botones
-        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10)); // Espaciado entre los botones
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)); // FlowLayout para una sola línea
         actionPanel.setOpaque(false);
 
         // Definir los botones y sus textos explícitamente
-        attackButton = new AttackButton(this); // Aseguramos que el texto esté definido en AttackButton
+        attackButton = new JButton("Atacar");
         fleeButton = new JButton("Huir");
-        abilitiesButton = new JButton("Habilidades");
+        JButton saveButton = new JButton("Guardar");
+        JButton startWindowButton = new JButton("Inicio");
+        JButton exitButton = new JButton("Salir");
 
         // Personalizar los botones
-        styleButton(attackButton);
-        styleButton(fleeButton);
-        styleButton(abilitiesButton);
+        Dimension buttonSize = new Dimension(100, 30); // Tamaño personalizado
+        styleSmallButton(attackButton, buttonSize);
+        styleSmallButton(fleeButton, buttonSize);
+        styleSmallButton(saveButton, buttonSize);
+        styleSmallButton(startWindowButton, buttonSize);
+        styleSmallButton(exitButton, buttonSize);
 
         // Añadir ActionListeners a los botones
-        attackButton.addActionListener(e -> handleAttack()); // Acción de atacar
-        fleeButton.addActionListener(e -> handleFlee());   // Acción de huir
-        abilitiesButton.addActionListener(e -> handleAbilities()); // Acción de habilidades
+        attackButton.addActionListener(e -> handleAttack());
+        fleeButton.addActionListener(e -> handleFlee());
+        saveButton.addActionListener(e -> saveGame());
+        startWindowButton.addActionListener(e -> returnToStartWindow());
+        exitButton.addActionListener(e -> exitGame());
 
         // Añadir los botones al panel de acciones
         actionPanel.add(attackButton);
-        actionPanel.add(abilitiesButton);
+        actionPanel.add(saveButton);
         actionPanel.add(fleeButton);
+        actionPanel.add(startWindowButton);
+        actionPanel.add(exitButton);
 
         // Crear área de texto y su JScrollPane
         textDisplay = new JTextArea();
         textScroll = new JScrollPane(textDisplay);
-        configureMessageArea(); // Método para configurar el área de texto
+        configureMessageArea();
 
         // Añadir el panel de acciones y el área de texto al panel principal
-        bottomPanel.add(actionPanel, BorderLayout.WEST);
-        bottomPanel.add(textScroll, BorderLayout.CENTER);
+        bottomPanel.add(actionPanel, BorderLayout.CENTER);
+        bottomPanel.add(textScroll, BorderLayout.SOUTH);
     }
 
-    // Acción de ataque
+
+    // Método para personalizar botones con tamaño
+    private void styleSmallButton(JButton button, Dimension size) {
+        button.setPreferredSize(size);
+        button.setBackground(new Color(86, 0, 39)); // Color de fondo
+        button.setForeground(Color.WHITE);         // Color del texto
+        button.setFocusPainted(false);
+        button.setFont(new Font("Arial", Font.BOLD, 12)); // Fuente más pequeña
+    }
+
+
+
+    private void styleSmallButton(JButton button) {
+        button.setFont(new Font("Arial", Font.PLAIN, 12)); // Tamaño de fuente más pequeño
+        button.setPreferredSize(new Dimension(100, 40));  // Tamaño más pequeño para los botones
+        button.setBackground(new Color(82, 3, 47));  // Color de fondo del botón
+        button.setForeground(Color.WHITE);  // Color del texto
+        button.setFocusPainted(false);  // Eliminar borde de enfoque
+        button.setBorder(BorderFactory.createLineBorder(new Color(239, 239, 234), 1));  // Borde del botón
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+    }
+
+
+    private void returnToStartWindow() {
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "¿Seguro que deseas regresar al menú principal? Se perderá el progreso actual.",
+                "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            dispose(); // Cierra la ventana actual
+            new StartWindow().setVisible(true); // Abre StartWindow
+        }
+    }
+
+
+
+    // Modificar la acción de atacar para hacer el daño aleatorio
     private void handleAttack() {
-        // Generar un daño aleatorio entre 10 y 50
-        int damage = (int) (Math.random() * 41) + 10; // Daño entre 10 y 50
+        if (currentEnemy == null) {
+            appendText("No hay enemigo para atacar.");
+            return;
+        }
 
-        // Cambiar el color del botón para simular un efecto visual
-        attackButton.setBackground(Color.RED); // Cambiar a color rojo
-        Timer timer = new Timer(500, e -> attackButton.setBackground(null)); // Volver al color original después de 500 ms
-        timer.setRepeats(false); // Asegurarse de que solo se ejecute una vez
-        timer.start();
+        // Infligir daño al enemigo (daño aleatorio entre 10 y 50)
+        int playerAttackDamage = (int) (Math.random() * 41) + 10; // Daño entre 10 y 50
+        int enemyCurrentHP = currentEnemy.getStats().get(Stats.HP);
+        enemyCurrentHP -= playerAttackDamage;
 
-        // Mostrar un mensaje en el área de texto con el daño infligido
-        textDisplay.setText("¡Has atacado al enemigo y le has infligido " + damage + " puntos de daño!");
+        appendText("¡Atacaste al enemigo y le infligiste " + playerAttackDamage + " puntos de daño!");
+        currentEnemy.getStats().put(Stats.HP, enemyCurrentHP); // Actualiza la vida del enemigo
 
-        // Si deseas que el área de texto se actualice en tiempo real, puedes agregar un salto de línea y el mensaje
-        textDisplay.append("\n¡Es tu turno para seguir luchando!");
+        // Aumentar experiencia del jugador (ejemplo: 10% del daño causado)
+        int currentExp = player.getStats().get(Stats.EXPERIENCE);
+        currentExp += (int) (playerAttackDamage * 0.1);
+        player.getStats().put(Stats.EXPERIENCE, currentExp);
+        expBar.setValue(currentExp); // Actualiza la barra de experiencia
+
+        // Verificar si el enemigo fue derrotado
+        if (enemyCurrentHP <= 0) {
+            appendText("¡Has derrotado al enemigo!");
+            attackButton.setEnabled(false);  // Desactivar el botón de atacar
+            updateEnemyPanel(); // Genera un nuevo enemigo
+            return;
+        }
+
+        appendText("El enemigo tiene ahora " + enemyCurrentHP + " puntos de vida.");
+
+        // El enemigo contraataca y el jugador recibe daño (daño aleatorio entre 5 y 25)
+        int enemyAttackDamage = (int) (Math.random() * 21) + 5; // Daño entre 5 y 25
+        int playerCurrentHP = player.getStats().get(Stats.HP);
+        playerCurrentHP -= enemyAttackDamage;
+
+        appendText("El enemigo te atacó y te infligió " + enemyAttackDamage + " puntos de daño.");
+        player.getStats().put(Stats.HP, playerCurrentHP); // Actualiza la vida del jugador
+        lifeBar.setValue(playerCurrentHP); // Actualiza la barra de vida
+
+        // Reducir energía del jugador (ejemplo: 5 puntos por ataque recibido)
+        int currentEnergy = player.getStats().get(Stats.ENERGY);
+        currentEnergy -= 5;
+        player.getStats().put(Stats.ENERGY, currentEnergy);
+        energyBar.setValue(currentEnergy); // Actualiza la barra de energía
+
+        // Verificar si el jugador fue derrotado
+        if (playerCurrentHP <= 0) {
+            appendText("¡Has sido derrotado!");
+            attackButton.setEnabled(false); // Desactiva el botón de ataque si el jugador muere
+        }
     }
+
+
+    private void endGame(String message) {
+        // Mostrar el mensaje de fin de juego y deshabilitar la interacción
+        appendText(message);
+        textDisplay.setEditable(false);
+        attackButton.setEnabled(false); // Desactivar el botón de ataque
+        fleeButton.setEnabled(false);   // Desactivar el botón de huir
+    }
+
+    // Modificar la función que crea el enemigo para darle vida aleatoria
+    public void updateEnemyPanel() {
+        /** Generar un enemigo de manera aleatoria **/
+        currentEnemy = EnemyFactory.getEnemy();
+
+        if (currentEnemy == null) {
+            appendText("No se pudo generar un enemigo.");
+            return;
+        }
+
+        // Asignar vida aleatoria entre 50 y 150 puntos
+        int randomLife = (int) (Math.random() * 101) + 50; // Entre 50 y 150
+        currentEnemy.getStats().put(Stats.HP, randomLife);
+
+        /** Configurar el sprite del enemigo **/
+        ImageIcon sprite = currentEnemy.getSprite();
+        if (sprite != null) {
+            Image scaledImage = sprite.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            enemySpriteLabel.setIcon(new ImageIcon(scaledImage));
+        } else {
+            enemySpriteLabel.setIcon(null);
+        }
+
+        /** Configurar el nombre y la vida del enemigo **/
+        enemyNameLabel.setText("Enemigo: " + currentEnemy.getName());
+        enemyLifeLabel.setText("Vida: " + currentEnemy.getStats().get(Stats.HP));
+    }
+
+
+    // Método para guardar la partida
+    private void saveGame() {
+        try {
+            // Simula el guardado de la partida
+            appendText("¡Partida guardada exitosamente!");
+        } catch (Exception e) {
+            appendText("Error al guardar la partida: " + e.getMessage());
+        }
+    }
+
 
 
 
@@ -194,31 +331,29 @@ public class MainWindow extends JFrame {
         textDisplay.setText("Seleccionaste habilidades.");
     }
 
-
-
-
     // Función para estilizar los botones
     private void styleButton(JButton button) {
         button.setFont(new Font("Arial", Font.BOLD, 16));  // Usar una fuente de tamaño 16
         button.setPreferredSize(new Dimension(180, 60));  // Tamaño mayor para los botones
         button.setMargin(new Insets(10, 10, 10, 10));  // Ajuste de espaciado interno
-        button.setBackground(new Color(100, 100, 100));  // Color de fondo del botón
+        button.setBackground(new Color(82, 3, 47));  // Color de fondo del botón
         button.setForeground(Color.WHITE);  // Color del texto
         button.setFocusPainted(false);  // Eliminar borde de enfoque
-        button.setBorder(BorderFactory.createLineBorder(new Color(252, 232, 242), 2));  // Borde del botón
+        button.setBorder(BorderFactory.createLineBorder(new Color(239, 239, 234), 2));  // Borde del botón
         button.setHorizontalTextPosition(SwingConstants.CENTER);  // Centrado horizontal
         button.setVerticalTextPosition(SwingConstants.CENTER);  // Centrado vertical
     }
-
-
 
     private void configureMessageArea() {
         textDisplay.setEditable(false);  // No permitir la edición del área de texto
         textDisplay.setLineWrap(true);    // Permitir el salto de línea
         textDisplay.setWrapStyleWord(true); // Ajustar las palabras correctamente
         textDisplay.setPreferredSize(new Dimension(400, 100)); // Ajustar el tamaño si es necesario
-    }
 
+        // Asegúrate de que el JScrollPane tenga barras de desplazamiento automáticas
+        textScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);  // Siempre mostrar la barra vertical
+        textScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // Evitar barra horizontal
+    }
 
     private JPanel wrapComponentWithLabel(String labelText, JProgressBar progressBar) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -233,76 +368,11 @@ public class MainWindow extends JFrame {
         JProgressBar bar = new JProgressBar(0, max);
         bar.setValue(value);
         bar.setForeground(color);
-        bar.setBackground((new Color(67, 13, 54)));
+        bar.setBackground((new Color(57, 37, 6)));
         bar.setBorderPainted(false);
         bar.setPreferredSize(new Dimension(200, 20));
         return bar;
     }
-
-    public void updateEnemyPanel() {
-        /** Generar un enemigo de manera aleatoria **/
-        currentEnemy = EnemyFactory.getEnemy();
-
-        if (currentEnemy == null) {
-            appendText("No se pudo generar un enemigo.");
-            return;
-        }
-
-        /** Configurar el sprite del enemigo **/
-        ImageIcon sprite = currentEnemy.getSprite();
-        if (sprite != null) {
-            Image scaledImage = sprite.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-            enemySpriteLabel.setIcon(new ImageIcon(scaledImage));
-        } else {
-            enemySpriteLabel.setIcon(null);
-        }
-
-        /** Configurar el nombre y la vida del enemigo **/
-        enemyNameLabel.setText("Enemigo: " + currentEnemy.getName());
-        enemyLifeLabel.setText("Vida: " + currentEnemy.getStats().get(Stats.HP));
-    }
-
-    private void handleAttackAction() {
-        if (currentEnemy == null) {
-            appendText("No hay enemigo para atacar.");
-            return;
-        }
-
-        /** Simula el daño del jugador al enemigo **/
-        int playerAttackDamage = player.getAttack(); /** Obtén el daño de ataque del jugador **/
-        int enemyCurrentHP = currentEnemy.getStats().get(Stats.HP);
-        enemyCurrentHP -= playerAttackDamage;
-
-        appendText("Atacaste al enemigo y le infligiste " + playerAttackDamage + " de daño.");
-        currentEnemy.getStats().put(Stats.HP, enemyCurrentHP); /** Actualiza la vida del  **/
-
-        /** Verifica si el enemigo sigue vivo **/
-        if (enemyCurrentHP <= 0) {
-            appendText("¡Has derrotado al enemigo!");
-            updateEnemyPanel(); // Genera un nuevo enemigo
-            return;
-        }
-
-        appendText("El enemigo tiene ahora " + enemyCurrentHP + " de vida.");
-
-        /** Si el enemigo sigue vivo, contraatacará **/
-        int enemyAttackDamage = currentEnemy.getStats().get(Stats.ATTACK);
-        int playerCurrentHP = player.getStats().get(Stats.HP);
-        playerCurrentHP -= enemyAttackDamage;
-
-        appendText("El enemigo te contraatacó e infligió " + enemyAttackDamage + " de daño.");
-        player.getStats().put(Stats.HP, playerCurrentHP); /** Actualiza la vida del jugador **/
-
-        /** Actualiza la barra de vida del jugador **/
-        lifeBar.setValue(playerCurrentHP);
-
-        /** Verifica si el jugador sigue vivo **/
-        if (playerCurrentHP <= 0) {
-            appendText("¡Has sido derrotado!");
-            attackButton.setEnabled(false); /** Desactiva el botón de ataque si el jugador muere **/
-        }
-    }
-
 
     // Método que devuelve el enemigo actual
     public Enemy getCurrentEnemy() {
@@ -346,15 +416,6 @@ public class MainWindow extends JFrame {
         }
     }
 
-    /** método para guardar la partida **/
-    private void saveGame() {
-        try {
-            /** Simula el guardado **/
-            appendText("¡Partida guardada exitosamente!");
-        } catch (Exception e) {
-            appendText("Error al guardar la partida: " + e.getMessage());
-        }
-    }
 
     /** botón para salir del juego **/
     private void exitGame() {
